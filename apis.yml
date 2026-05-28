@@ -1,0 +1,32 @@
+aid: webscraping-ai
+name: WebScraping.AI
+description: "Web Scraping API with built-in proxies and JS rendering"
+url: https://webscraping.ai/
+specificationVersion: '0.20'
+created: '2026-05-28'
+modified: '2026-05-28'
+x-source: public-apis/public-apis
+x-category: "Development"
+x-tier: 3
+x-tier-reason: bulk-registered-from-public-apis
+tags:
+  - Development
+  - Public APIs
+apis:
+  - name: WebScraping.AI
+    description: "Web Scraping API with built-in proxies and JS rendering"
+    humanURL: https://webscraping.ai/
+    baseURL: https://webscraping.ai/
+    tags:
+      - Development
+    properties:
+      - type: Documentation
+        url: https://webscraping.ai/
+common:
+  - type: Website
+    url: https://webscraping.ai/
+  - type: PublicAPIsListing
+    url: https://github.com/public-apis/public-apis
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
