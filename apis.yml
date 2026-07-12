@@ -23,10 +23,14 @@ apis:
       - type: Documentation
         url: https://webscraping.ai/
 common:
+  - type: DomainSecurity
+    url: security/webscraping-ai-domain-security.yml
   - type: Website
     url: https://webscraping.ai/
   - type: PublicAPIsListing
     url: https://github.com/public-apis/public-apis
+  - url: https://webscraping.ai/blog
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
