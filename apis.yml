@@ -12,21 +12,33 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/webscraping-ai.png
 name: WebScraping.AI
-description: "Web Scraping API with built-in proxies and JS rendering"
+description: >-
+  Web scraping and data extraction API with JavaScript rendering, rotating proxies, CAPTCHA solving, and AI-powered
+  structured data extraction. Offers a REST API, an OpenAPI 3.1 contract, and both hosted and self-hosted MCP servers.
 url: https://webscraping.ai/
-specificationVersion: '0.20'
+specificationVersion: '0.21'
 created: '2026-05-28'
-modified: '2026-05-28'
+modified: '2026-08-08'
 x-source: public-apis/public-apis
-x-category: "Development"
+x-category: Development
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
 tags:
   - Development
   - Public APIs
+  - web scraping
+  - data extraction
+  - ai
+  - proxies
+  - html
+  - mcp
+  - llm-tools
+  - structured-data
+  - headless-browser
+  - captcha
 apis:
   - name: WebScraping.AI
-    description: "Web Scraping API with built-in proxies and JS rendering"
+    description: Web Scraping API with built-in proxies and JS rendering
     humanURL: https://webscraping.ai/
     baseURL: https://webscraping.ai/
     tags:
@@ -34,6 +46,50 @@ apis:
     properties:
       - type: Documentation
         url: https://webscraping.ai/
+  - name: WebScraping.AI REST API
+    description: >-
+      REST API for fetching HTML, extracting text, and AI-powered question answering and structured field extraction
+      from webpages. Uses API-key auth via query parameter.
+    humanURL: https://webscraping.ai/docs
+    baseURL: https://api.webscraping.ai
+    tags:
+      - web scraping
+      - data extraction
+      - ai
+      - proxies
+      - html
+      - mcp
+      - llm-tools
+      - structured-data
+      - headless-browser
+      - captcha
+    properties:
+      - type: OpenAPI
+        url: https://webscraping.ai/openapi.yml
+      - type: Documentation
+        url: https://webscraping.ai/docs
+  - name: WebScraping.AI Hosted MCP Server
+    description: >-
+      Hosted Model Context Protocol server connecting WebScraping.AI directly to AI assistants like Claude, Cursor, and
+      Windsurf. Sign in with account, no API key needed. Tools mirror the REST endpoints.
+    humanURL: https://webscraping.ai/docs
+    baseURL: https://mcp.webscraping.ai/mcp
+    tags:
+      - web scraping
+      - data extraction
+      - ai
+      - proxies
+      - html
+      - mcp
+      - llm-tools
+      - structured-data
+      - headless-browser
+      - captcha
+    properties:
+      - type: MCPServer
+        url: https://mcp.webscraping.ai/mcp
+      - type: Documentation
+        url: https://webscraping.ai/docs
 common:
   - type: DomainSecurity
     url: security/webscraping-ai-domain-security.yml
@@ -46,3 +102,10 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+  - FN: WebScraping.AI
+    url: https://webscraping.ai
+generated:
+  by: apis.io/add
+  model: claude-opus-4-8
+  confidence: 95
+  at: '2026-08-08T04:15:44.799Z'
