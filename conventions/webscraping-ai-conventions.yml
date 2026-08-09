@@ -1,0 +1,133 @@
+generated: '2026-08-09'
+method: searched
+source: https://webscraping.ai/docs
+derived_from: openapi/webscraping-ai-openapi.yml
+description: >-
+  Cross-cutting request/response semantics for the WebScraping.AI REST API. Captured from the
+  provider's documentation and its published OpenAPI 3.1.0.
+base_url: https://api.webscraping.ai
+authentication:
+  style: api-key-query
+  parameter: api_key
+  location: query
+  applied: 'globally — OpenAPI security: [{api_key: []}]'
+  failure_status: 403
+  detail: authentication/webscraping-ai-authentication.yml
+  caveat: >-
+    The key travels in the query string, so it lands in server logs, browser history and
+    referrer headers. The docs warn against exposing it in client-side code.
+idempotency:
+  supported: true
+  mechanism: http-method-semantics
+  idempotency_key_header: null
+  detail: >-
+    All seven published operations are HTTP GET — safe and idempotent per RFC 9110 §9.2.2.
+    There is no state-changing operation in the API and therefore no idempotency-key contract,
+    and none is needed: repeating a request cannot double-apply an effect. The provider
+    documents retry explicitly ("Success Rates & Retrying") and states that failed requests are
+    not charged, so an agent can retry a 429/500/504 without cost or duplication risk.
+  retry_guidance:
+    documented: true
+    url: https://webscraping.ai/docs
+    retryable_statuses: [429, 500, 504]
+    non_retryable_statuses: [400, 402, 403]
+    advice:
+    - Retry — many failures are transient (network or target-site load).
+    - Increase `timeout` to 20000-30000 ms for slow-loading sites.
+    - Switch to proxy=residential (or stealth) when datacenter IPs are blocked.
+    - Increase `js_timeout` for pages with slow dynamic content.
+  billing_on_failure: not-charged
+  caveats:
+  - Results are not cached or deduplicated server-side — an identical repeated request
+    re-scrapes the target page and is billed again if it succeeds.
+  - There is no request-replay or "same key, same response" guarantee; safety comes from the
+    read-only nature of the surface, not from a stored idempotency record.
+pagination:
+  supported: false
+  detail: >-
+    No collection endpoints exist. `GET /selected-multiple` returns all matched elements in one
+    response with no paging parameters.
+filtering_and_shaping:
+  parameters:
+  - {name: selector, applies_to: /selected, description: CSS selector for a single page area}
+  - {name: selectors, applies_to: /selected-multiple, description: array of CSS selectors}
+  - {name: fields, applies_to: /ai/fields, description: 'map of field name -> natural-language
+      extraction instruction (deepObject style)'}
+  - {name: text_format, applies_to: /text, values: [plain, xml, json], description: plain returns
+      Markdown body content; json/xml wrap title, description and content}
+  - {name: return_links, applies_to: /text, description: include links found in the body text}
+request_options:
+  shared_across_scraping_operations:
+  - {name: js, type: boolean, default: true, note: headless Chrome rendering}
+  - {name: js_timeout, type: integer, default: 2000, unit: ms}
+  - {name: timeout, type: integer, default: 10000, unit: ms, max: 30000}
+  - {name: wait_for, type: string, note: CSS selector to await; overrides js_timeout}
+  - {name: proxy, type: enum, values: [datacenter, residential, stealth], default: datacenter}
+  - {name: country, type: enum, values: [us, gb, de, it, fr, ca, es, ru, jp, kr, in, hk, tr], default: us}
+  - {name: device, type: enum, values: [desktop, mobile, tablet], default: desktop}
+  - {name: headers, type: object, note: 'custom headers forwarded to the target page, e.g. headers[Cookie]'}
+  - {name: js_script, type: string, note: custom JavaScript executed on the target page}
+  - {name: custom_proxy, type: string, note: 'bring-your-own proxy URL: http://user:pass@host:port'}
+  - {name: error_on_404, type: boolean, default: false}
+  - {name: error_on_redirect, type: boolean, default: false}
+  encoding_note: >-
+    Object-valued parameters (`headers`, `fields`) use bracket form on the query string —
+    `headers[Cookie]=...`, `fields[title]=...`.
+metadata_and_tracing:
+  request_id_header: null
+  response_headers:
+  - {name: X-Credits-Used, description: credits consumed by this request}
+  - {name: X-Credits-Remaining, description: credits left on the account}
+  - {name: X-Target-Status, description: HTTP status code returned by the TARGET website}
+  - {name: X-Target-Url, description: final URL of the target page after redirects}
+  note: >-
+    No correlation/request-id header is documented, so an agent cannot cite a request id when
+    contacting support. Credit accounting is exposed per response, which is unusually good.
+rate_limit_signaling:
+  model: concurrency
+  headers: []
+  detail: >-
+    Limits are on CONCURRENT requests, not requests per interval. There are no
+    X-RateLimit-*/RateLimit-* headers and no Retry-After. Exceeding concurrency returns 429.
+    Live headroom is only observable by polling `GET /account` for `remaining_concurrency`.
+  artifact: rate-limits/webscraping-ai-rate-limits.yml
+versioning:
+  scheme: none-in-url
+  detail: >-
+    The base URL and paths carry no version segment (https://api.webscraping.ai/html). The
+    OpenAPI document carries `info.version` (3.2.1 as published) but the API exposes no version
+    header or parameter, so clients cannot pin a version.
+  artifact: lifecycle/webscraping-ai-lifecycle.yml
+error_envelope:
+  media_type: application/json
+  shape: '{message, status_code?, status_message?, body?}'
+  rfc9457: false
+  detail: errors/webscraping-ai-problem-types.yml
+response_content_types:
+  - {operation: getQuestion, type: text/html, note: plain-text answer}
+  - {operation: getFields, type: application/json}
+  - {operation: getHTML, type: text/html}
+  - {operation: getText, type: 'text/html or application/json (per text_format)'}
+  - {operation: getSelected, type: text/html}
+  - {operation: getSelectedMultiple, type: application/json, note: array of strings}
+  - {operation: account, type: application/json}
+alternate_surfaces:
+  proxy_mode:
+    host: proxy.webscraping.ai
+    port: 8888
+    auth: 'HTTP proxy basic — username = API key, password = parameter string (e.g. js=true&proxy=residential)'
+    tls_note: presents a self-signed certificate; clients must be told to accept it
+  mcp:
+    url: https://mcp.webscraping.ai/mcp
+    detail: mcp/webscraping-ai-mcp.yml
+cross_links:
+  authentication: authentication/webscraping-ai-authentication.yml
+  errors: errors/webscraping-ai-problem-types.yml
+  lifecycle: lifecycle/webscraping-ai-lifecycle.yml
+  rate_limits: rate-limits/webscraping-ai-rate-limits.yml
+  sandbox: sandbox/webscraping-ai-sandbox.yml
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://webscraping.ai/docs', http_status: 200}
+  - {url: 'https://webscraping.ai/openapi.yml', http_status: 200}

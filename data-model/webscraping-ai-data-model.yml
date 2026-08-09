@@ -1,0 +1,80 @@
+generated: '2026-08-09'
+method: derived
+source: openapi/webscraping-ai-openapi.yml
+description: >-
+  Entity graph derived from the published OpenAPI. WebScraping.AI is a stateless transformation
+  API — it stores no user-owned resources and exposes no identifiers to reference. The only
+  persistent entity is the caller's own Account; everything else is a per-request projection of
+  a third-party web page. There are consequently no id-reference fields and no
+  has_one/has_many relationships between server-side objects.
+shape: stateless-transformation
+entities:
+- name: Account
+  schema: '#/components/schemas/Account'
+  kind: singleton
+  persistent: true
+  identifier: none (implicit — resolved from the api_key)
+  read_by: [account]
+  fields:
+  - {name: email, type: string, description: Account email}
+  - {name: remaining_api_calls, type: integer, deprecated: true, description: Deprecated alias
+      of remaining_monthly_credits}
+  - {name: remaining_monthly_credits, type: integer, description: Remaining subscription credits}
+  - {name: remaining_payg_credits, type: integer, description: Remaining pay-as-you-go credits}
+  - {name: remaining_total_credits, type: integer, description: Total remaining credits}
+  - {name: resets_at, type: integer, description: Unix timestamp of the monthly quota reset}
+  - {name: remaining_concurrency, type: integer, description: Concurrent-request headroom}
+- name: SelectedAreas
+  schema: '#/components/schemas/SelectedAreas'
+  kind: response-projection
+  persistent: false
+  description: Array of HTML strings, one per element matched by the supplied selectors.
+  produced_by: [getSelectedMultiple]
+- name: Error
+  schema: '#/components/schemas/Error'
+  kind: envelope
+  persistent: false
+  description: Flat error envelope; carries the TARGET page's status alongside the message.
+  produced_by: [getQuestion, getFields, getHTML, getText, getSelected, getSelectedMultiple, account]
+  detail: errors/webscraping-ai-problem-types.yml
+- name: TargetPage
+  schema: null
+  kind: external-subject
+  persistent: false
+  description: >-
+    The third-party web page addressed by the `url` parameter. Not modeled in the spec and not
+    owned by the provider, but it is the true subject of every operation — every response is a
+    rendering of it (HTML, text, selected fragments, an AI answer, or extracted fields).
+  addressed_by: [getQuestion, getFields, getHTML, getText, getSelected, getSelectedMultiple]
+relationships:
+- from: Account
+  to: TargetPage
+  type: none
+  note: >-
+    The API records no association between an account and the pages it scraped — no job,
+    request or result resource is exposed for later retrieval.
+- from: TargetPage
+  to: SelectedAreas
+  type: projection
+  via: selectors
+  note: Not a stored relationship; a per-request transformation.
+representations:
+- {operation: getHTML, of: TargetPage, media_type: text/html, note: fully rendered markup}
+- {operation: getText, of: TargetPage, media_type: 'text/html | application/json', note: 'visible
+    text; json/xml add title, description, content'}
+- {operation: getSelected, of: TargetPage, media_type: text/html, note: one selected area}
+- {operation: getSelectedMultiple, of: TargetPage, media_type: application/json, schema: SelectedAreas}
+- {operation: getQuestion, of: TargetPage, media_type: text/html, note: LLM answer as plain text}
+- {operation: getFields, of: TargetPage, media_type: application/json, note: 'caller-defined field
+    map; the shape is supplied per request, so it cannot be modeled as a fixed schema'}
+- {operation: account, of: Account, media_type: application/json, schema: Account}
+observations:
+- No id-prefix convention exists, because no server-side object is ever assigned an id.
+- The response shape of getFields is defined by the caller's `fields` argument, which is why the
+  spec cannot declare a concrete schema for it — a real constraint for agents doing typed
+  deserialization.
+- Credit accounting is the only stateful concept, and it is readable through one operation.
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://webscraping.ai/openapi.yml', http_status: 200}

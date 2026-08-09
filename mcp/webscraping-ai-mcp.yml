@@ -1,0 +1,84 @@
+generated: '2026-08-09'
+method: searched
+status: published
+source: https://webscraping.ai/docs
+servers:
+- name: webscraping-ai-hosted
+  kind: remote
+  transport: http
+  protocol: streamable-http
+  url: https://mcp.webscraping.ai/mcp
+  auth: oauth2
+  auth_note: >-
+    OAuth 2.1 login with the WebScraping.AI account — no API key. Anonymous POST of
+    tools/list returns 401 with
+    `WWW-Authenticate: Bearer resource_metadata="https://mcp.webscraping.ai/.well-known/oauth-protected-resource/mcp"`.
+  oauth:
+    authorization_server: https://webscraping.ai
+    protected_resource: https://mcp.webscraping.ai/mcp
+    metadata:
+    - well-known/webscraping-ai-oauth-authorization-server.json
+    - well-known/webscraping-ai-oauth-protected-resource.json
+  install: claude mcp add --transport http webscraping-ai https://mcp.webscraping.ai/mcp
+  docs: https://webscraping.ai/docs
+- name: webscraping-ai-mcp
+  kind: local
+  transport: stdio
+  package: webscraping-ai-mcp
+  registry: npm
+  version: 1.0.7
+  mcp_name: io.github.webscraping-ai/webscraping-ai
+  install: npx -y webscraping-ai-mcp
+  auth: api-key
+  auth_note: WEBSCRAPING_AI_API_KEY environment variable.
+  repository: https://github.com/webscraping-ai/webscraping-ai-mcp-server
+  registry_manifest: https://github.com/webscraping-ai/webscraping-ai-mcp-server/blob/master/server.json
+  smithery: https://github.com/webscraping-ai/webscraping-ai-mcp-server/blob/master/smithery.yaml
+  license: MIT
+tools_source: >-
+  Tool names, descriptions and input schemas below are read verbatim from the provider's own
+  open-source server registration
+  (https://github.com/webscraping-ai/webscraping-ai-mcp-server/blob/master/src/index.js).
+  The docs state the hosted server "exposes the same 7 tools". Live `tools/list` against the
+  hosted server is OAuth-gated (401), so the hosted server's schemas were not introspected.
+tools:
+- name: webscraping_ai_question
+  description: Get an answer to a question about a given web page (LLM-powered).
+  inputs: [url, question, '<common options>']
+  source_operation: openapi/webscraping-ai-openapi.yml#getQuestion
+- name: webscraping_ai_fields
+  description: Extract structured data fields from a web page using natural-language field instructions.
+  inputs: [url, fields, '<common options>']
+  source_operation: openapi/webscraping-ai-openapi.yml#getFields
+- name: webscraping_ai_html
+  description: Get the full HTML of a page by URL, with proxies and Chromium JS rendering.
+  inputs: [url, return_script_result, format, '<common options>']
+  source_operation: openapi/webscraping-ai-openapi.yml#getHTML
+- name: webscraping_ai_text
+  description: Get the visible text of a page by URL.
+  inputs: [url, text_format, return_links, '<common options>']
+  source_operation: openapi/webscraping-ai-openapi.yml#getText
+- name: webscraping_ai_selected
+  description: Get the HTML of a selected page area by URL and CSS selector.
+  inputs: [url, selector, format, '<common options>']
+  source_operation: openapi/webscraping-ai-openapi.yml#getSelected
+- name: webscraping_ai_selected_multiple
+  description: Get the HTML of multiple page areas by URL and an array of CSS selectors.
+  inputs: [url, selectors, '<common options>']
+  source_operation: openapi/webscraping-ai-openapi.yml#getSelectedMultiple
+- name: webscraping_ai_account
+  description: Information about the account API credits quota.
+  inputs: []
+  source_operation: openapi/webscraping-ai-openapi.yml#account
+common_options:
+  description: Shared across every tool except webscraping_ai_account.
+  fields: [timeout, js, js_timeout, wait_for, proxy, country, custom_proxy, device,
+    error_on_404, error_on_redirect, js_script]
+crosswalk: mcp/webscraping-ai-tool-crosswalk.yml
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://mcp.webscraping.ai/mcp', method: POST, body: 'tools/list', http_status: 401}
+  - {url: 'https://mcp.webscraping.ai/.well-known/oauth-protected-resource', http_status: 200}
+  - {url: 'https://raw.githubusercontent.com/webscraping-ai/webscraping-ai-mcp-server/master/src/index.js', http_status: 200}
+  - {url: 'https://registry.npmjs.org/webscraping-ai-mcp', http_status: 200}

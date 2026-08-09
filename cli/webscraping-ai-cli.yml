@@ -1,0 +1,85 @@
+generated: '2026-08-09'
+method: searched
+source: https://github.com/webscraping-ai/webscraping-ai-cli
+docs: https://webscraping.ai/docs
+name: webscraping-ai-cli
+official: true
+license: MIT
+version: 1.0.2
+binaries: [webscraping-ai, wsai]
+runtime: Node.js >= 20
+install:
+- method: npm-global
+  command: npm install -g webscraping-ai-cli
+- method: npx
+  command: npx -y webscraping-ai-cli --help
+authentication:
+- method: env
+  command: export WEBSCRAPING_AI_API_KEY=your-key
+  note: simplest in CI
+- method: config-file
+  command: webscraping-ai auth set <key>
+  path: ~/.config/webscraping-ai/config.json
+  permissions: '0600'
+- method: flag
+  command: --api-key <key>
+commands:
+- group: scraping
+  items:
+  - {command: html, usage: 'webscraping-ai html <url>', operation: getHTML, description: Full rendered HTML}
+  - {command: text, usage: 'webscraping-ai text <url>', operation: getText, description: 'Visible text (plain | json | xml)'}
+  - {command: selected, usage: 'webscraping-ai selected <url> --selector <css>', operation: getSelected, description: HTML of one CSS-selected area}
+  - {command: selected-multiple, usage: 'webscraping-ai selected-multiple <url> --selector a --selector b', operation: getSelectedMultiple, description: HTML of several selected areas in one request}
+- group: ai
+  items:
+  - {command: ask, usage: 'webscraping-ai ask <url> --question "..."', operation: getQuestion, description: Ask a natural-language question about a page}
+  - {command: extract, usage: 'webscraping-ai extract <url> --fields ''{"title":"..."}''', operation: getFields, description: Extract structured fields with natural-language instructions}
+- group: account
+  items:
+  - {command: account, usage: 'webscraping-ai account', operation: account, description: Remaining credits and quota}
+- group: config
+  items:
+  - {command: auth set, usage: 'webscraping-ai auth set <key>', description: Persist the API key to the config file}
+- group: agent-skill
+  items:
+  - {command: setup skill, usage: 'webscraping-ai setup skill --editor <id> | --all', description: Install the bundled agent skill into a coding assistant}
+  - {command: setup list, usage: 'webscraping-ai setup list', description: List supported editor ids}
+common_flags:
+- {flag: --js / --no-js, purpose: Toggle JavaScript rendering (default on)}
+- {flag: --proxy TYPE, purpose: 'datacenter (default), residential, stealth'}
+- {flag: --country CC, purpose: Two-letter proxy country code}
+- {flag: --device TYPE, purpose: 'desktop, mobile, tablet'}
+- {flag: --timeout MS, purpose: Total page-retrieval timeout (max 30000)}
+- {flag: --js-timeout MS, purpose: JS rendering time after page load (max 20000)}
+- {flag: --wait-for CSS, purpose: CSS selector to wait for}
+- {flag: --headers JSON, purpose: 'Headers forwarded to the target page; inline JSON or @file.json'}
+- {flag: --custom-proxy URL, purpose: 'Bring-your-own proxy: http://user:pass@host:port'}
+- {flag: --js-script CODE, purpose: Custom JS evaluated on the target page}
+- {flag: --error-on-404, purpose: Treat target 404 as an error}
+- {flag: --error-on-redirect, purpose: Treat target redirects as an error}
+- {flag: --output FILE, purpose: Write result to FILE instead of stdout}
+- {flag: --pretty / --no-pretty, purpose: Force pretty or single-line JSON}
+key_flows:
+- name: batch from stdin
+  detail: '`<url>` may be `-` to read URLs from stdin, one per line; lines starting with # are ignored. Responses are emitted in order.'
+  example: cat urls.txt | webscraping-ai text - --output ./articles.ndjson
+- name: install the agent skill
+  detail: >-
+    Installs the bundled skill into claude-code, cursor, windsurf, kiro, opencode, gemini,
+    copilot, augment or factory. Also distributable through the Claude Code plugin marketplace
+    manifest bundled at plugins/webscraping-ai/.claude-plugin/marketplace.json.
+  example: webscraping-ai setup skill --all
+exit_codes:
+  auth: 4
+  payment: 5
+  rate-limit: 6
+  server: 7
+  timeout: 8
+  connection: 9
+agent_skill: skills/webscraping-ai-cli-skill.md
+package: packages/webscraping-ai-packages.yml
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://raw.githubusercontent.com/webscraping-ai/webscraping-ai-cli/master/README.md', http_status: 200}
+  - {url: 'https://registry.npmjs.org/webscraping-ai-cli', http_status: 200}

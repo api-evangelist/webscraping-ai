@@ -1,0 +1,77 @@
+generated: '2026-08-09'
+method: searched
+source: https://webscraping.ai/#pricing
+currency: USD
+billing_model: credits
+description: >-
+  Monthly subscription tiers plus a standalone pay-as-you-go credit pack. Credits are consumed
+  per successful request at a rate that depends on JS rendering, proxy type and whether an AI
+  endpoint was used. Failed requests are not charged.
+plans:
+- name: Free
+  price: 0
+  interval: month
+  credits: 2000
+  concurrency: 2
+  trial: true
+  credit_card_required: false
+  features:
+  - 2,000 API credits per month
+  - Maximum 2 concurrent connections
+- name: Personal
+  price: 29
+  interval: month
+  credits: 250000
+  concurrency: 10
+  features:
+  - 250,000 API credits
+  - 10 concurrent requests
+  - Geotargeting
+- name: Plus
+  price: 99
+  interval: month
+  credits: 1000000
+  concurrency: 25
+  highlight: Best Value
+  features:
+  - 1,000,000 API credits
+  - 25 concurrent requests
+  - Geotargeting
+- name: Startup
+  price: 249
+  interval: month
+  credits: 3000000
+  concurrency: 50
+  features:
+  - 3,000,000 API credits
+  - 50 concurrent requests
+  - Geotargeting
+- name: Pay as you go
+  price_per_credit: 0.0002
+  interval: none
+  minimum_topup: 20
+  credits_per_dollar: 5000
+  validity_months: 12
+  features:
+  - No subscription required
+  - $20 minimum top-up ($20 = 100,000 credits)
+  - Credits valid 12 months; every top-up extends the whole balance
+  - Consumed only after the monthly plan quota is exhausted
+- name: Enterprise
+  price: custom
+  interval: month
+  contact: hello@webscraping.ai
+  features:
+  - Custom plans above 2,000,000 requests per month
+policies:
+  upgrade: Immediate; unused credits from the old plan are added to the new quota.
+  downgrade: Takes effect at the end of the current billing period.
+  refund: >-
+    Full refund within 7 days if less than 30% of the plan quota was used; partial refund
+    beyond that.
+  free_tier: 2,000 credits per month, no credit card required.
+pricing_url: https://webscraping.ai/#pricing
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://webscraping.ai/', http_status: 200}

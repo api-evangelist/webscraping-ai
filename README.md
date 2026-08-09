@@ -42,7 +42,9 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Web Scraping API with built-in proxies and JS rendering
+Web scraping API returning rendered HTML, visible text, CSS-selected fragments, or LLM-extracted
+structured data for any URL — with headless Chromium rendering, rotating datacenter/residential/
+stealth proxies, CAPTCHA handling and geotargeting.
 
 **APIs.yml:** [apis.yml](apis.yml)
 
@@ -51,19 +53,30 @@ Web Scraping API with built-in proxies and JS rendering
 - **x-tier:** 3 (bulk-registered from public-apis)
 - **source:** [public-apis/public-apis](https://github.com/public-apis/public-apis) — category: Development
 
-## API
-- **WebScraping.AI** — [Documentation](https://webscraping.ai/)
+## APIs
+- **WebScraping.AI API** — `https://api.webscraping.ai` — [Documentation](https://webscraping.ai/docs) · [OpenAPI 3.1.0](openapi/webscraping-ai-openapi.yml)
+- **WebScraping.AI MCP Server** — `https://mcp.webscraping.ai/mcp` — [manifest](mcp/webscraping-ai-mcp.yml) · [tool crosswalk](mcp/webscraping-ai-tool-crosswalk.yml)
+
+## Artifacts
+- [OpenAPI](openapi/webscraping-ai-openapi.yml) — provider-published, harvested from https://webscraping.ai/openapi.yml
+- [Authentication](authentication/webscraping-ai-authentication.yml) · [Conventions](conventions/webscraping-ai-conventions.yml) · [Error catalog](errors/webscraping-ai-problem-types.yml)
+- [Rate limits](rate-limits/webscraping-ai-rate-limits.yml) · [Plans](plans/webscraping-ai-plans.yml) · [Lifecycle](lifecycle/webscraping-ai-lifecycle.yml)
+- [Packages / SDKs](packages/webscraping-ai-packages.yml) · [CLI](cli/webscraping-ai-cli.yml) · [Sandbox](sandbox/webscraping-ai-sandbox.yml)
+- [Agent skill](skills/_index.yml) — the provider's own SKILL.md, saved verbatim
+- [Well-known](well-known/webscraping-ai-well-known.yml) · [Conformance](conformance/webscraping-ai-conformance.yml) · [Data model](data-model/webscraping-ai-data-model.yml)
+- [llms.txt](llms/webscraping-ai-llms.txt) · [Overlay](overlays/webscraping-ai-openapi-overlay.yaml) · [Agentic access](agentic-access/webscraping-ai-agentic-access.yml)
 
 ## Tags
-Development, Public APIs
+Web Scraping, Data Extraction, Proxies, Artificial Intelligence, Browser Automation, Model Context Protocol, Development, Public APIs
 
 ## Notes
-This entry was bulk-registered as part of a public-apis catalog sweep on 2026-05-28.
-A real OpenAPI artifact will be added during a follow-up enrichment pass if the provider publishes one.
+This entry was bulk-registered as part of a public-apis catalog sweep on 2026-05-28, and enriched
+on 2026-08-09 from the provider's own public surface. No event, streaming or webhook surface is
+published; no A2A agent card, security.txt, status page or public changelog was found.
 
 ## Timestamps
 - **Created:** 2026-05-28
-- **Modified:** 2026-05-28
+- **Modified:** 2026-08-09
 
 ## Maintainers
 - **Kin Lane** — kin@apievangelist.com

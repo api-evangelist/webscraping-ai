@@ -1,0 +1,114 @@
+generated: '2026-08-09'
+method: searched
+source: openapi/webscraping-ai-openapi.yml
+docs: https://webscraping.ai/docs#error-codes
+format: custom-json
+format_note: >-
+  Not RFC 9457. Errors are returned as `application/json` with a flat envelope defined by the
+  `Error` schema — no `application/problem+json`, no `type` URI, no `title`/`detail` fields.
+envelope:
+  media_type: application/json
+  schema: '#/components/schemas/Error'
+  fields:
+  - name: message
+    type: string
+    description: Error description.
+    always_present: true
+  - name: status_code
+    type: integer
+    description: HTTP status code returned by the TARGET page (not by the WebScraping.AI API).
+    always_present: false
+  - name: status_message
+    type: string
+    description: HTTP status message returned by the target page.
+    always_present: false
+  - name: body
+    type: string
+    description: Response body of the target page.
+    always_present: false
+  note: >-
+    The two-layer model matters for agents: the HTTP status of the API response describes the
+    scraping request, while `status_code`/`status_message` inside the body describe the target
+    website. A 500 from this API commonly means the TARGET site returned a non-2xx status.
+problems:
+- status: 400
+  name: parameters_validation_error
+  title: Invalid parameters
+  description: Parameters validation error (e.g. an invalid CSS selector).
+  example_message: Invalid CSS selector
+  remediation: Check parameter values and format.
+  retryable: false
+  billed: false
+  source_operations: [getQuestion, getFields, getHTML, getText, getSelected, getSelectedMultiple]
+- status: 402
+  name: insufficient_credits
+  title: Insufficient credits
+  description: Billing issue — the account has run out of API credits.
+  remediation: Upgrade the plan, top up pay-as-you-go credits, or wait for the monthly credit reset.
+  retryable: false
+  billed: false
+  source_operations: [getQuestion, getFields, getHTML, getText, getSelected, getSelectedMultiple]
+- status: 403
+  name: invalid_api_key
+  title: Invalid API key
+  description: Wrong or missing API key. Note this API uses 403, not 401, for auth failure.
+  remediation: Verify the api_key query parameter is correct.
+  retryable: false
+  billed: false
+  source_operations: [getQuestion, getFields, getHTML, getText, getSelected, getSelectedMultiple, account]
+- status: 429
+  name: too_many_concurrent_requests
+  title: Too many concurrent requests
+  description: >-
+    The plan's concurrency ceiling was exceeded. This is a CONCURRENCY limit, not a
+    requests-per-second quota.
+  remediation: Reduce in-flight request count or upgrade for higher concurrency. Poll
+    GET /account for `remaining_concurrency`.
+  retryable: true
+  billed: false
+  source_operations: [getQuestion, getFields, getHTML, getText, getSelected, getSelectedMultiple]
+- status: 500
+  name: target_page_error
+  title: Target website error
+  description: >-
+    Non-2xx and non-404 HTTP status on the target page, or an unexpected error. Carries
+    `status_code`/`status_message` describing the target site. Also returned when a `wait_for`
+    selector never appears within the request timeout.
+  example_message: Unexpected HTTP code on the target page
+  remediation: >-
+    Retry; try proxy=residential or proxy=stealth if the site blocks datacenter IPs; check the
+    target site is available. Contact support@webscraping.ai if it persists.
+  retryable: true
+  billed: false
+  source_operations: [getQuestion, getFields, getHTML, getText, getSelected, getSelectedMultiple]
+- status: 504
+  name: request_timeout
+  title: Request timeout
+  description: The scrape did not complete within the request timeout.
+  remediation: Increase the `timeout` parameter (max 30000 ms) and/or `js_timeout`.
+  retryable: true
+  billed: false
+  source_operations: [getQuestion, getFields, getHTML, getText, getSelected, getSelectedMultiple]
+billing_rule: >-
+  Failed requests are free — the docs state credits are consumed only on successful responses.
+  This makes retry on 429/500/504 safe from a cost perspective.
+client_exit_codes:
+  source: https://github.com/webscraping-ai/webscraping-ai-cli
+  note: The official CLI maps error classes to stable process exit codes.
+  codes:
+    auth: 4
+    payment: 5
+    rate-limit: 6
+    server: 7
+    timeout: 8
+    connection: 9
+gaps:
+- No RFC 9457 problem+json representation.
+- No stable machine-readable error `code` field — only a human-readable `message`.
+- Error `message` values are not enumerated in the docs or the spec (spec examples read
+  "Some error"), so no error-code registry can be captured.
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://webscraping.ai/openapi.yml', http_status: 200}
+  - {url: 'https://webscraping.ai/docs', http_status: 200}

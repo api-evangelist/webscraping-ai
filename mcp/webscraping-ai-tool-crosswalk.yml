@@ -1,0 +1,106 @@
+generated: '2026-08-09'
+method: derived
+source: mcp/webscraping-ai-mcp.yml + openapi/webscraping-ai-openapi.yml
+description: >-
+  Binds each WebScraping.AI MCP tool to the OpenAPI operation that backs it. WebScraping.AI is
+  an unusually clean case: the MCP surface is a 1:1 projection of the REST surface — seven tools,
+  seven operations, no MCP-only composites and no REST operations without a tool. Each tool's
+  real input contract is the bound operation's `parameters` block in
+  openapi/webscraping-ai-openapi.yml.
+surfaces:
+  openapi:
+    file: openapi/webscraping-ai-openapi.yml
+    source: https://webscraping.ai/openapi.yml
+    version: 3.2.1
+    server: https://api.webscraping.ai
+    gated: false
+  mcp:
+    url: https://mcp.webscraping.ai/mcp
+    transport: streamable-http
+    gated: true
+    gated_note: >-
+      tools/list requires an OAuth 2.1 bearer token (401 anonymously). Tool names and input
+      shapes were taken from the provider's open-source stdio server, which the docs state
+      exposes the same 7 tools.
+  graphql: null
+  proxy_mode:
+    endpoint: proxy.webscraping.ai:8888
+    note: >-
+      HTTP proxy front-end for the same scraping core; not modeled in the OpenAPI and not
+      exposed as an MCP tool.
+crosswalk:
+- tool: webscraping_ai_question
+  category: ai
+  rest: [getQuestion]
+  path: GET /ai/question
+  binding: rest
+  confidence: high
+  note: Tool args url+question map to the `url` and `question` query parameters.
+- tool: webscraping_ai_fields
+  category: ai
+  rest: [getFields]
+  path: GET /ai/fields
+  binding: rest
+  confidence: high
+  note: >-
+    Tool arg `fields` (a name -> instruction map) maps to the deepObject `fields` query
+    parameter. The tool JSON-stringifies the result; REST returns the object directly.
+- tool: webscraping_ai_html
+  category: scraping
+  rest: [getHTML]
+  path: GET /html
+  binding: rest
+  confidence: high
+  note: >-
+    The tool adds a client-side `format` (json|text) wrapper that has no REST equivalent;
+    REST always returns raw HTML.
+- tool: webscraping_ai_text
+  category: scraping
+  rest: [getText]
+  path: GET /text
+  binding: rest
+  confidence: high
+  note: Tool args text_format and return_links map to the same-named query parameters.
+- tool: webscraping_ai_selected
+  category: scraping
+  rest: [getSelected]
+  path: GET /selected
+  binding: rest
+  confidence: high
+  note: Tool arg `selector` maps to the `selector` query parameter.
+- tool: webscraping_ai_selected_multiple
+  category: scraping
+  rest: [getSelectedMultiple]
+  path: GET /selected-multiple
+  binding: rest
+  confidence: high
+  note: Tool arg `selectors` (array) maps to the `selectors` array query parameter.
+- tool: webscraping_ai_account
+  category: account
+  rest: [account]
+  path: GET /account
+  binding: rest
+  confidence: high
+mcp_only: []
+rest_only: []
+divergences:
+- kind: response-shaping
+  detail: >-
+    The MCP server sanitizes and truncates page content before returning it, and wraps HTML /
+    selected results in a JSON envelope when format=json. The REST operations return the raw
+    payload. Same data core, different presentation.
+- kind: auth
+  detail: >-
+    REST authenticates with an `api_key` query parameter; the hosted MCP server authenticates
+    with OAuth 2.1 and issues no API key. The local stdio MCP server uses the API key.
+- kind: parameter-defaults
+  detail: >-
+    The MCP server applies its own defaults (js rendering and residential proxy configurable via
+    environment variables) on top of the REST defaults (js=true, proxy=datacenter).
+coverage:
+  tools_named: 7
+  tools_bound: 7
+  mcp_only: 0
+  rest_operations_total: 7
+  rest_operations_with_tool: 7
+  binding_rate: 1.0

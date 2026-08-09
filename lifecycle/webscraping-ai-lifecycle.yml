@@ -1,0 +1,66 @@
+generated: '2026-08-09'
+method: searched
+source: https://webscraping.ai/docs
+versioning:
+  scheme: none
+  current: null
+  spec_version: 3.2.1
+  detail: >-
+    Neither the base URL (https://api.webscraping.ai) nor any path carries a version segment,
+    and no version header or query parameter is documented. The only version signal is
+    `info.version` in the published OpenAPI (3.2.1 as fetched 2026-08-09; the copy vendored in
+    the MCP server repo is 3.2.0). Clients cannot pin an API version.
+  docs: https://webscraping.ai/docs
+  spec: https://webscraping.ai/openapi.yml
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    No published deprecation or sunset policy, and no RFC 8594 Sunset/Deprecation header
+    support is documented. Deprecation is signalled only inside the spec: the `Account` schema
+    marks `remaining_api_calls` as `deprecated: true`, described as a backward-compatible alias
+    of `remaining_monthly_credits`.
+deprecated_operations: []
+deprecated_fields:
+- openapi/webscraping-ai-openapi.yml#/components/schemas/Account/properties/remaining_api_calls
+compatibility_signals:
+- >-
+    Client SDKs are versioned independently and in lockstep across languages (4.0.x for Python,
+    JS, PHP, Ruby, Go, Java and .NET as of 2026-08-09), each carrying a CHANGELOG.md in its
+    GitHub repository.
+- The docs page carries an "Updated July 20, 2026" stamp.
+sla:
+  url: null
+  uptime_target: null
+  marketing_claims:
+    uptime: '99.9%'
+    avg_response_time: '<3.5s'
+    availability: 24/7
+    source: https://webscraping.ai/
+  note: >-
+    These are marketing figures on the homepage, not a contractual SLA. No SLA document was
+    found.
+status_page: null
+status_page_probes:
+- {url: 'https://status.webscraping.ai/', result: DNS/connection failure (curl exit, no host)}
+- {url: 'https://webscraping.ai/status', http_status: 404}
+changelog: null
+changelog_probes:
+- {url: 'https://webscraping.ai/changelog', http_status: 404}
+roadmap: null
+roadmap_probes:
+- {url: 'https://webscraping.ai/roadmap', http_status: 404}
+gaps:
+- No status page — an agent or integrator has no incident feed to consult.
+- No public API changelog; only per-SDK CHANGELOG.md files in GitHub.
+- No deprecation policy and no Sunset/Deprecation header support.
+- No version pinning mechanism on the API itself.
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://webscraping.ai/docs', http_status: 200}
+  - {url: 'https://webscraping.ai/openapi.yml', http_status: 200}
+  - {url: 'https://webscraping.ai/changelog', http_status: 404}
+  - {url: 'https://webscraping.ai/status', http_status: 404}
+  - {url: 'https://webscraping.ai/roadmap', http_status: 404}

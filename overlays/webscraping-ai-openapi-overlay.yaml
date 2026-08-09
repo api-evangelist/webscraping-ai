@@ -1,0 +1,86 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for WebScraping.AI
+  version: 1.0.0
+extends: openapi/webscraping-ai-openapi.yml
+x-generated: '2026-08-09'
+x-method: generated
+x-source: >-
+  Derived from the provider's published OpenAPI 3.1.0 (https://webscraping.ai/openapi.yml) plus
+  the artifacts in this repository. Applies API Evangelist annotations only; the harvested spec
+  is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/webscraping-ai/
+    x-apievangelist-artifacts:
+      authentication: authentication/webscraping-ai-authentication.yml
+      conventions: conventions/webscraping-ai-conventions.yml
+      errors: errors/webscraping-ai-problem-types.yml
+      lifecycle: lifecycle/webscraping-ai-lifecycle.yml
+      rate_limits: rate-limits/webscraping-ai-rate-limits.yml
+      plans: plans/webscraping-ai-plans.yml
+      packages: packages/webscraping-ai-packages.yml
+      mcp: mcp/webscraping-ai-mcp.yml
+      tool_crosswalk: mcp/webscraping-ai-tool-crosswalk.yml
+      data_model: data-model/webscraping-ai-data-model.yml
+      sandbox: sandbox/webscraping-ai-sandbox.yml
+      cli: cli/webscraping-ai-cli.yml
+      conformance: conformance/webscraping-ai-conformance.yml
+- target: $.info
+  update:
+    x-agent-notes:
+      surface: read-only
+      idempotent: true
+      idempotency-basis: >-
+        Every published operation is an HTTP GET; there is no state-changing operation and no
+        idempotency-key contract is required.
+      retry-safe-statuses: [429, 500, 504]
+      billing-on-failure: not-charged
+      concurrency-limited: true
+      concurrency-observability: GET /account -> remaining_concurrency
+- target: $.servers
+  update:
+  - url: https://api.webscraping.ai
+    description: Production REST API (the only host; no sandbox environment exists)
+- target: $.components.securitySchemes.api_key
+  update:
+    x-apievangelist-warning: >-
+      The API key is carried in the query string, so it is exposed to server logs, proxies,
+      browser history and Referer headers. Prefer a server-side proxy for any client-side use.
+    x-apievangelist-auth-failure-status: 403
+- target: $.paths['/ai/question'].get
+  update:
+    x-mcp-tool: webscraping_ai_question
+    x-credit-cost: 'base cost + 5'
+- target: $.paths['/ai/fields'].get
+  update:
+    x-mcp-tool: webscraping_ai_fields
+    x-credit-cost: 'base cost + 5'
+    x-apievangelist-note: >-
+      The response shape is defined by the caller's `fields` argument and therefore cannot be
+      typed from the specification.
+- target: $.paths['/html'].get
+  update:
+    x-mcp-tool: webscraping_ai_html
+- target: $.paths['/text'].get
+  update:
+    x-mcp-tool: webscraping_ai_text
+- target: $.paths['/selected'].get
+  update:
+    x-mcp-tool: webscraping_ai_selected
+- target: $.paths['/selected-multiple'].get
+  update:
+    x-mcp-tool: webscraping_ai_selected_multiple
+- target: $.paths['/account'].get
+  update:
+    x-mcp-tool: webscraping_ai_account
+    x-apievangelist-note: >-
+      The only operation exposing account state; poll it for remaining_concurrency before
+      scaling parallel requests, since no rate-limit headers are returned.
+- target: $.components.schemas.Error
+  update:
+    x-apievangelist-note: >-
+      Two-layer error model — the HTTP status describes the scraping request while
+      status_code/status_message describe the target website. A 500 usually means the target
+      site failed, not the API.

@@ -1,0 +1,35 @@
+generated: '2026-08-09'
+method: searched
+source: https://github.com/webscraping-ai/webscraping-ai-cli
+description: >-
+  WebScraping.AI publishes its own agent skill. The file below is the provider's SKILL.md,
+  saved verbatim — it ships inside the official CLI package and is installable into Claude Code,
+  Cursor, Windsurf, Kiro, OpenCode, Gemini CLI, GitHub Copilot, Augment and Factory via
+  `webscraping-ai setup skill --all`, or through the bundled Claude Code plugin marketplace
+  manifest. Nothing here was authored by API Evangelist.
+skills:
+- file: webscraping-ai-cli-skill.md
+  name: webscraping-ai
+  method: searched
+  source: https://raw.githubusercontent.com/webscraping-ai/webscraping-ai-cli/master/plugins/webscraping-ai/skills/webscraping-ai/SKILL.md
+  description: >-
+    Use the WebScraping.AI CLI to fetch HTML, plain text, or AI-extracted data from any URL,
+    including JS-rendered sites.
+  api: openapi/webscraping-ai-openapi.yml
+  surface: cli
+  operations: [getHTML, getText, getSelected, getSelectedMultiple, getQuestion, getFields, account]
+  distribution:
+    package: webscraping-ai-cli
+    registry: npm
+    install_command: webscraping-ai setup skill --all
+    marketplace_manifest: https://github.com/webscraping-ai/webscraping-ai-cli/blob/master/.claude-plugin/marketplace.json
+    supported_editors: [claude-code, cursor, windsurf, kiro, opencode, gemini, copilot, augment, factory]
+related:
+  mcp: mcp/webscraping-ai-mcp.yml
+  crosswalk: mcp/webscraping-ai-tool-crosswalk.yml
+  cli: cli/webscraping-ai-cli.yml
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://raw.githubusercontent.com/webscraping-ai/webscraping-ai-cli/master/plugins/webscraping-ai/skills/webscraping-ai/SKILL.md', http_status: 200}
+  - {url: 'https://raw.githubusercontent.com/webscraping-ai/webscraping-ai-cli/master/.claude-plugin/marketplace.json', http_status: 200}

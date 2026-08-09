@@ -1,0 +1,65 @@
+generated: '2026-08-09'
+method: searched
+source: https://webscraping.ai/#pricing
+docs: https://webscraping.ai/docs
+model: concurrency-and-credits
+description: >-
+  WebScraping.AI meters two independent things: a monthly/pay-as-you-go CREDIT balance that a
+  request consumes on success, and a hard ceiling on CONCURRENT in-flight requests set by plan.
+  There is no requests-per-second or requests-per-minute limit.
+rate_limits:
+- name: Free
+  plan: Free
+  limit_type: concurrent-requests
+  limit_count: 2
+  interval: concurrent
+  credits_per_month: 2000
+  price_usd_month: 0
+- name: Personal
+  plan: Personal
+  limit_type: concurrent-requests
+  limit_count: 10
+  interval: concurrent
+  credits_per_month: 250000
+  price_usd_month: 29
+- name: Plus
+  plan: Plus
+  limit_type: concurrent-requests
+  limit_count: 25
+  interval: concurrent
+  credits_per_month: 1000000
+  price_usd_month: 99
+- name: Startup
+  plan: Startup
+  limit_type: concurrent-requests
+  limit_count: 50
+  interval: concurrent
+  credits_per_month: 3000000
+  price_usd_month: 249
+credit_costs:
+- {configuration: 'no JS, datacenter proxy', credits: 1}
+- {configuration: 'JS rendering, datacenter proxy (default)', credits: 5}
+- {configuration: 'no JS, residential proxy', credits: 10}
+- {configuration: 'JS rendering, residential proxy', credits: 25}
+- {configuration: 'stealth proxy (with or without JS)', credits: 50}
+- {configuration: 'AI endpoints (/ai/question, /ai/fields)', credits: '+5 on top of the above'}
+enforcement:
+  over_concurrency_status: 429
+  over_credits_status: 402
+  headers: []
+  retry_after: false
+  note: >-
+    No RateLimit-* or X-RateLimit-* response headers and no Retry-After. Remaining headroom is
+    only observable by calling GET /account, which returns `remaining_concurrency`,
+    `remaining_monthly_credits`, `remaining_payg_credits`, `remaining_total_credits` and
+    `resets_at`.
+observability_operation: openapi/webscraping-ai-openapi.yml#account
+request_ceiling:
+  max_request_duration_ms: 30000
+  default_timeout_ms: 10000
+billing_on_failure: not-charged
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://webscraping.ai/', http_status: 200}
+  - {url: 'https://webscraping.ai/docs', http_status: 200}

@@ -1,0 +1,103 @@
+generated: '2026-08-09'
+method: searched
+source: https://webscraping.ai/docs#sdks
+docs: https://webscraping.ai/docs#sdks
+github_org: https://github.com/webscraping-ai
+packages:
+- language: python
+  registry: pypi
+  name: webscraping-ai
+  version: 4.0.1
+  url: https://pypi.org/project/webscraping-ai/
+  install: pip install webscraping_ai
+  repository: https://github.com/webscraping-ai/webscraping-ai-python
+  official: true
+- language: javascript
+  registry: npm
+  name: webscraping-ai
+  version: 4.0.2
+  url: https://www.npmjs.com/package/webscraping-ai
+  install: npm install webscraping-ai
+  repository: https://github.com/webscraping-ai/webscraping-ai-js
+  official: true
+- language: php
+  registry: packagist
+  name: webscraping-ai/webscraping-ai-php
+  url: https://packagist.org/packages/webscraping-ai/webscraping-ai-php
+  install: composer require webscraping-ai/webscraping-ai-php
+  repository: https://github.com/webscraping-ai/webscraping-ai-php
+  official: true
+- language: ruby
+  registry: rubygems
+  name: webscraping_ai
+  version: 4.0.1
+  url: https://rubygems.org/gems/webscraping_ai
+  install: gem install webscraping_ai
+  repository: https://github.com/webscraping-ai/webscraping-ai-ruby
+  official: true
+- language: go
+  registry: go-modules
+  name: github.com/webscraping-ai/webscraping-ai-go/v4
+  version: v4.0.2
+  url: https://pkg.go.dev/github.com/webscraping-ai/webscraping-ai-go/v4
+  install: go get github.com/webscraping-ai/webscraping-ai-go/v4
+  repository: https://github.com/webscraping-ai/webscraping-ai-go
+  official: true
+- language: java
+  registry: maven-central
+  name: ai.webscraping:webscraping-ai
+  version: 4.0.2
+  url: https://central.sonatype.com/artifact/ai.webscraping/webscraping-ai
+  install: 'Maven: ai.webscraping:webscraping-ai:4.0.2'
+  repository: https://github.com/webscraping-ai/webscraping-ai-java
+  official: true
+- language: csharp
+  registry: nuget
+  name: WebScrapingAI
+  version: 4.0.2
+  url: https://www.nuget.org/packages/WebScrapingAI
+  install: dotnet add package WebScrapingAI
+  repository: https://github.com/webscraping-ai/webscraping-ai-dotnet
+  official: true
+- language: javascript
+  registry: npm
+  name: webscraping-ai-cli
+  version: 1.0.2
+  kind: cli
+  url: https://www.npmjs.com/package/webscraping-ai-cli
+  install: npm install -g webscraping-ai-cli
+  repository: https://github.com/webscraping-ai/webscraping-ai-cli
+  official: true
+- language: javascript
+  registry: npm
+  name: webscraping-ai-mcp
+  version: 1.0.7
+  kind: mcp-server
+  url: https://www.npmjs.com/package/webscraping-ai-mcp
+  install: npx -y webscraping-ai-mcp
+  repository: https://github.com/webscraping-ai/webscraping-ai-mcp-server
+  official: true
+- language: javascript
+  registry: npm
+  name: n8n-nodes-webscraping-ai
+  version: 1.0.3
+  kind: integration-node
+  url: https://www.npmjs.com/package/n8n-nodes-webscraping-ai
+  install: npm install n8n-nodes-webscraping-ai
+  repository: https://github.com/webscraping-ai/webscraping-ai-n8n
+  official: true
+summary:
+  official_sdks: 7
+  languages: [python, javascript, php, ruby, go, java, csharp]
+  tooling: [webscraping-ai-cli, webscraping-ai-mcp, n8n-nodes-webscraping-ai]
+  registries: [pypi, npm, packagist, rubygems, go-modules, maven-central, nuget]
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://registry.npmjs.org/webscraping-ai', http_status: 200}
+  - {url: 'https://pypi.org/pypi/webscraping-ai/json', http_status: 200}
+  - {url: 'https://rubygems.org/api/v1/gems/webscraping_ai.json', http_status: 200}
+  - {url: 'https://repo1.maven.org/maven2/ai/webscraping/webscraping-ai/maven-metadata.xml', http_status: 200}
+  - {url: 'https://api.nuget.org/v3-flatcontainer/webscrapingai/index.json', http_status: 200}
+  - {url: 'https://packagist.org/packages/webscraping-ai/webscraping-ai-php.json', http_status: 200}
+  - {url: 'https://proxy.golang.org/github.com/webscraping-ai/webscraping-ai-go/v4/@v/list', http_status: 200}

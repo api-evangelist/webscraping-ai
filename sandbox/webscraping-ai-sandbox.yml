@@ -1,0 +1,79 @@
+generated: '2026-08-09'
+method: searched
+source: https://webscraping.ai/docs
+description: >-
+  WebScraping.AI does not operate a separate test/sandbox environment with test keys — there is
+  one live API and one key namespace. What it does publish is an interactive, publicly reachable
+  API Request Builder console plus a free credit tier that functions as the trial surface, and
+  three standalone browser tools for working out selectors and request shapes before spending
+  credits.
+test_live_separation:
+  separate_sandbox_environment: false
+  test_key_prefix: null
+  test_mode_parameter: null
+  detail: >-
+    No test-mode keys, no sandbox host, no simulated responses. Every call hits the live
+    scraping infrastructure and consumes credits on success.
+console:
+  name: API Request Builder
+  url: https://webscraping.ai/dashboard/api-request-builder
+  public: true
+  auth_required_to_view: false
+  detail: >-
+    Interactive request builder covering every endpoint. Prefilled, shareable example
+    invocations are linked from the homepage via query parameters
+    (?share=true&form[endpoint]=...&form[url]=...), so a specific request can be handed to
+    someone as a URL.
+  prefilled_examples:
+  - {endpoint: ai/question, url: 'https://example.com', question: 'What is this page about?'}
+  - {endpoint: ai/question, url: 'https://httpbingo.org/html', question: 'Summarize this page content'}
+  - {endpoint: ai/fields, url: 'https://www.amazon.com/dp/B07ZPKBL9V', fields: [product_name, price, description, rating]}
+  - {endpoint: text, url: 'https://example.com'}
+  - {endpoint: html, url: 'https://example.com', js: true}
+  - {endpoint: html, url: 'https://ipapi.co/json/', country: ca, proxy: residential}
+free_tier:
+  credits_per_month: 2000
+  concurrency: 2
+  credit_card_required: false
+  signup: https://webscraping.ai/auth/sign_up
+  detail: The free monthly credit allowance is the intended way to evaluate the API.
+free_request_policy:
+  failed_requests_billed: false
+  detail: >-
+    Failed requests are free — an important property when testing selectors or proxy settings,
+    since unsuccessful experiments cost nothing.
+target_pages_used_in_official_examples:
+  note: >-
+    The provider's own documentation and console examples use these public pages as safe test
+    targets. They are not provider-hosted fixtures; they are third-party sites the docs happen
+    to demonstrate against.
+  values:
+  - https://example.com
+  - https://httpbingo.org/html
+supporting_tools:
+- name: XPath / CSS Selector Tester
+  url: https://webscraping.ai/tools/selector-tester
+  purpose: Validate a selector against page markup before spending credits on /selected.
+- name: curl Converter
+  url: https://webscraping.ai/tools/curl-converter
+  purpose: Convert a curl command into client code in the supported languages.
+- name: HTML to Markdown Converter
+  url: https://webscraping.ai/tools/html-to-markdown
+  purpose: Convert scraped HTML into Markdown.
+cli_smoke_tests:
+  note: >-
+    Each official SDK repository ships a smoke-test entry point (bin/smoke.ts, cmd/smoke) that
+    exercises the live API with a real key — the closest thing to a provider-published test
+    harness.
+gaps:
+- No sandbox environment or test-mode API key.
+- No mock/fixture endpoint that returns a canned response without consuming credits.
+- No way to simulate a 402/429 condition deterministically.
+x-evidence:
+  fetched: '2026-08-09'
+  probes:
+  - {url: 'https://webscraping.ai/dashboard/api-request-builder', http_status: 200}
+  - {url: 'https://webscraping.ai/tools/selector-tester', http_status: 200}
+  - {url: 'https://webscraping.ai/tools/curl-converter', http_status: 200}
+  - {url: 'https://webscraping.ai/tools/html-to-markdown', http_status: 200}
+  - {url: 'https://webscraping.ai/docs', http_status: 200}

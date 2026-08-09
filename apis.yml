@@ -1,111 +1,185 @@
 aid: webscraping-ai
 accessModel:
-  pricing: unknown
-  onboarding: unknown
-  trial: false
-  try_now: false
-  public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  pricing: freemium
+  onboarding: self-service
+  trial: true
+  try_now: true
+  public: true
+  label: Public
+  confidence: high
+  source:
+  - https://webscraping.ai/#pricing
+  - https://webscraping.ai/dashboard/api-request-builder
+  - https://webscraping.ai/docs
+  generated: '2026-08-09'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/webscraping-ai.png
 name: WebScraping.AI
-description: >-
-  Web scraping and data extraction API with JavaScript rendering, rotating proxies, CAPTCHA solving, and AI-powered
-  structured data extraction. Offers a REST API, an OpenAPI 3.1 contract, and both hosted and self-hosted MCP servers.
+description: WebScraping.AI is a web scraping API that returns the rendered HTML, visible text, CSS-selected
+  fragments, or LLM-extracted structured data of any URL, so callers do not have to operate their own
+  scraping infrastructure. The service handles headless Chromium JavaScript rendering, rotating datacenter,
+  residential and stealth proxies, CAPTCHA solving and geotargeting. Seven read-only GET operations on
+  api.webscraping.ai are documented in a published OpenAPI 3.1.0 specification, authenticated with an
+  api_key query parameter, metered in credits and bounded by a per-plan ceiling on concurrent requests.
+  The same capabilities are reachable as a hosted OAuth-protected MCP server for AI assistants, an HTTP
+  proxy front-end for existing scraping tools, an official CLI that ships an installable agent skill,
+  and first-party SDKs for Python, JavaScript, PHP, Ruby, Go, Java and .NET.
 url: https://webscraping.ai/
-specificationVersion: '0.21'
+specificationVersion: '0.20'
 created: '2026-05-28'
-modified: '2026-08-08'
+modified: '2026-08-09'
 x-source: public-apis/public-apis
 x-category: Development
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
 tags:
-  - Development
-  - Public APIs
-  - web scraping
-  - data extraction
-  - ai
-  - proxies
-  - html
-  - mcp
-  - llm-tools
-  - structured-data
-  - headless-browser
-  - captcha
+- Web Scraping
+- Data Extraction
+- Proxies
+- Artificial Intelligence
+- Browser Automation
+- Model Context Protocol
+- Development
+- Public APIs
+- ai
+- html
+- mcp
+- llm-tools
+- structured-data
+- headless-browser
+- captcha
 apis:
-  - name: WebScraping.AI
-    description: Web Scraping API with built-in proxies and JS rendering
-    humanURL: https://webscraping.ai/
-    baseURL: https://webscraping.ai/
-    tags:
-      - Development
-    properties:
-      - type: Documentation
-        url: https://webscraping.ai/
-  - name: WebScraping.AI REST API
-    description: >-
-      REST API for fetching HTML, extracting text, and AI-powered question answering and structured field extraction
-      from webpages. Uses API-key auth via query parameter.
-    humanURL: https://webscraping.ai/docs
-    baseURL: https://api.webscraping.ai
-    tags:
-      - web scraping
-      - data extraction
-      - ai
-      - proxies
-      - html
-      - mcp
-      - llm-tools
-      - structured-data
-      - headless-browser
-      - captcha
-    properties:
-      - type: OpenAPI
-        url: https://webscraping.ai/openapi.yml
-      - type: Documentation
-        url: https://webscraping.ai/docs
-  - name: WebScraping.AI Hosted MCP Server
-    description: >-
-      Hosted Model Context Protocol server connecting WebScraping.AI directly to AI assistants like Claude, Cursor, and
-      Windsurf. Sign in with account, no API key needed. Tools mirror the REST endpoints.
-    humanURL: https://webscraping.ai/docs
-    baseURL: https://mcp.webscraping.ai/mcp
-    tags:
-      - web scraping
-      - data extraction
-      - ai
-      - proxies
-      - html
-      - mcp
-      - llm-tools
-      - structured-data
-      - headless-browser
-      - captcha
-    properties:
-      - type: MCPServer
-        url: https://mcp.webscraping.ai/mcp
-      - type: Documentation
-        url: https://webscraping.ai/docs
+- name: WebScraping.AI API
+  description: Read-only scraping and extraction API. Seven GET operations covering AI question answering,
+    AI field extraction, full rendered HTML, visible text, single and multiple CSS-selected page areas,
+    and account credit/concurrency status.
+  humanURL: https://webscraping.ai/docs
+  baseURL: https://api.webscraping.ai
+  tags:
+  - Web Scraping
+  - Data Extraction
+  - Artificial Intelligence
+  - Development
+  properties:
+  - type: OpenAPI
+    url: openapi/webscraping-ai-openapi.yml
+  - type: Overlay
+    url: overlays/webscraping-ai-openapi-overlay.yaml
+  - type: Documentation
+    url: https://webscraping.ai/docs
+  - type: APIReference
+    url: https://webscraping.ai/docs#parameters
+  - type: GettingStarted
+    url: https://webscraping.ai/docs#quick-start
+  - type: Authentication
+    url: authentication/webscraping-ai-authentication.yml
+  - type: ErrorCatalog
+    url: errors/webscraping-ai-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/webscraping-ai-rate-limits.yml
+  - type: DataModel
+    url: data-model/webscraping-ai-data-model.yml
+- name: WebScraping.AI MCP Server
+  description: Hosted remote Model Context Protocol server exposing the same seven capabilities as tools
+    to AI assistants. Streamable HTTP transport, OAuth 2.1 login with PKCE and dynamic client registration,
+    no API key. An open-source stdio variant is published to npm.
+  humanURL: https://webscraping.ai/docs#ai-tools
+  baseURL: https://mcp.webscraping.ai/mcp
+  tags:
+  - Model Context Protocol
+  - Artificial Intelligence
+  - Web Scraping
+  properties:
+  - type: MCPServer
+    url: mcp/webscraping-ai-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/webscraping-ai-tool-crosswalk.yml
+  - type: SourceCode
+    url: https://github.com/webscraping-ai/webscraping-ai-mcp-server
 common:
-  - type: DomainSecurity
-    url: security/webscraping-ai-domain-security.yml
-  - type: Website
-    url: https://webscraping.ai/
-  - type: PublicAPIsListing
-    url: https://github.com/public-apis/public-apis
-  - url: https://webscraping.ai/blog
-    type: Blog
+- type: OpenAPI
+  url: openapi/webscraping-ai-openapi.yml
+- type: Overlay
+  url: overlays/webscraping-ai-openapi-overlay.yaml
+- type: AgenticAccess
+  url: agentic-access/webscraping-ai-agentic-access.yml
+- type: Authentication
+  url: authentication/webscraping-ai-authentication.yml
+- type: DomainSecurity
+  url: security/webscraping-ai-domain-security.yml
+- type: Conventions
+  url: conventions/webscraping-ai-conventions.yml
+- type: Idempotency
+  url: conventions/webscraping-ai-conventions.yml
+- type: ErrorCatalog
+  url: errors/webscraping-ai-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/webscraping-ai-lifecycle.yml
+- type: Conformance
+  url: conformance/webscraping-ai-conformance.yml
+- type: DataModel
+  url: data-model/webscraping-ai-data-model.yml
+- type: RateLimits
+  url: rate-limits/webscraping-ai-rate-limits.yml
+- type: Plans
+  url: plans/webscraping-ai-plans.yml
+- type: Packages
+  url: packages/webscraping-ai-packages.yml
+- type: SDKs
+  url: packages/webscraping-ai-packages.yml
+- type: CLI
+  url: cli/webscraping-ai-cli.yml
+- type: Sandbox
+  url: sandbox/webscraping-ai-sandbox.yml
+- type: MCPServer
+  url: mcp/webscraping-ai-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/webscraping-ai-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: WellKnown
+  url: well-known/webscraping-ai-well-known.yml
+- type: LLMsTxt
+  url: llms/webscraping-ai-llms.txt
+- type: Website
+  url: https://webscraping.ai/
+- type: DeveloperPortal
+  url: https://webscraping.ai/docs
+- type: Documentation
+  url: https://webscraping.ai/docs
+- type: APIReference
+  url: https://webscraping.ai/docs#parameters
+- type: GettingStarted
+  url: https://webscraping.ai/docs#quick-start
+- type: Console
+  url: https://webscraping.ai/dashboard/api-request-builder
+- type: Pricing
+  url: https://webscraping.ai/#pricing
+- type: SignUp
+  url: https://webscraping.ai/auth/sign_up
+- type: Login
+  url: https://webscraping.ai/auth/sign_in
+- type: TermsOfService
+  url: https://webscraping.ai/terms
+- type: PrivacyPolicy
+  url: https://webscraping.ai/privacy
+- type: GitHubOrganization
+  url: https://github.com/webscraping-ai
+- type: Support
+  url: mailto:support@webscraping.ai
+- type: Integrations
+  url: https://webscraping.ai/integrations
+- type: PublicAPIsListing
+  url: https://github.com/public-apis/public-apis
+- url: https://webscraping.ai/blog
+  type: Blog
+- type: OpenAPI
+  url: https://webscraping.ai/openapi.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
-  - FN: WebScraping.AI
-    url: https://webscraping.ai
-generated:
-  by: apis.io/add
-  model: claude-opus-4-8
-  confidence: 95
-  at: '2026-08-08T04:15:44.799Z'
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-09'
+  status: enriched
+  artifacts_added: 22
+  pass: local-v1

@@ -1,0 +1,59 @@
+generated: '2026-08-09'
+method: searched
+source: live probes of the webscraping.ai, api.webscraping.ai and mcp.webscraping.ai hosts
+hosts:
+- host: https://webscraping.ai
+  documents:
+  - path: /.well-known/oauth-authorization-server   # RFC 8414
+    status: 200
+    file: webscraping-ai-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource     # RFC 9728
+    status: 200
+    file: webscraping-ai-oauth-protected-resource.json
+  - path: /.well-known/oauth-protected-resource/mcp
+    status: 200
+    note: same document as /.well-known/oauth-protected-resource
+  - path: /.well-known/security.txt                 # RFC 9116
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.webscraping.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://mcp.webscraping.ai
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    note: identical to the webscraping.ai copy; resource is https://mcp.webscraping.ai/mcp
+  - path: /.well-known/agent-card.json
+    status: 301
+    note: redirects to webscraping.ai, which 404s — no A2A agent card is published
+findings:
+- The provider publishes a complete OAuth 2.1 discovery pair for its hosted MCP server —
+  authorization-server metadata with dynamic client registration (RFC 7591) and PKCE S256,
+  plus protected-resource metadata naming https://mcp.webscraping.ai/mcp.
+- No security.txt is published on any host.
+- No api-catalog, no ai-plugin.json, no A2A agent card on any host.
