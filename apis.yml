@@ -49,22 +49,34 @@ tags:
 - headless-browser
 - captcha
 apis:
-- name: WebScraping.AI API
-  description: Read-only scraping and extraction API. Seven GET operations covering AI question answering,
-    AI field extraction, full rendered HTML, visible text, single and multiple CSS-selected page areas,
-    and account credit/concurrency status.
+- name: WebScraping.AI MCP Server
+  description: >-
+    Hosted remote Model Context Protocol server exposing the same seven capabilities as tools to AI assistants.
+    Streamable HTTP transport, OAuth 2.1 login with PKCE and dynamic client registration, no API key.
+    An open-source stdio variant is published to npm.
+  humanURL: https://webscraping.ai/docs#ai-tools
+  baseURL: https://mcp.webscraping.ai/mcp
+  tags:
+  - Model Context Protocol
+  - Artificial Intelligence
+  - Web Scraping
+  properties:
+  - type: MCPServer
+    url: mcp/webscraping-ai-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/webscraping-ai-tool-crosswalk.yml
+  - type: SourceCode
+    url: https://github.com/webscraping-ai/webscraping-ai-mcp-server
+- aid: webscraping-ai:webscraping-ai-account-api
+  name: WebScraping.AI Account API
+  description: Information about your account API credits quota
   humanURL: https://webscraping.ai/docs
   baseURL: https://api.webscraping.ai
   tags:
-  - Web Scraping
-  - Data Extraction
-  - Artificial Intelligence
-  - Development
+  - Account
   properties:
   - type: OpenAPI
-    url: openapi/webscraping-ai-openapi.yml
-  - type: Overlay
-    url: overlays/webscraping-ai-openapi-overlay.yaml
+    url: openapi/webscraping-ai-account-api-openapi.yml
   - type: Documentation
     url: https://webscraping.ai/docs
   - type: APIReference
@@ -79,26 +91,105 @@ apis:
     url: rate-limits/webscraping-ai-rate-limits.yml
   - type: DataModel
     url: data-model/webscraping-ai-data-model.yml
-- name: WebScraping.AI MCP Server
-  description: Hosted remote Model Context Protocol server exposing the same seven capabilities as tools
-    to AI assistants. Streamable HTTP transport, OAuth 2.1 login with PKCE and dynamic client registration,
-    no API key. An open-source stdio variant is published to npm.
-  humanURL: https://webscraping.ai/docs#ai-tools
-  baseURL: https://mcp.webscraping.ai/mcp
+- aid: webscraping-ai:webscraping-ai-ai-api
+  name: WebScraping.AI AI API
+  description: Analyze web pages using LLMs
+  humanURL: https://webscraping.ai/docs
+  baseURL: https://api.webscraping.ai
   tags:
-  - Model Context Protocol
-  - Artificial Intelligence
-  - Web Scraping
+  - AI
   properties:
-  - type: MCPServer
-    url: mcp/webscraping-ai-mcp.yml
-  - type: ToolCrosswalk
-    url: mcp/webscraping-ai-tool-crosswalk.yml
-  - type: SourceCode
-    url: https://github.com/webscraping-ai/webscraping-ai-mcp-server
+  - type: OpenAPI
+    url: openapi/webscraping-ai-ai-api-openapi.yml
+  - type: Documentation
+    url: https://webscraping.ai/docs
+  - type: APIReference
+    url: https://webscraping.ai/docs#parameters
+  - type: GettingStarted
+    url: https://webscraping.ai/docs#quick-start
+  - type: Authentication
+    url: authentication/webscraping-ai-authentication.yml
+  - type: ErrorCatalog
+    url: errors/webscraping-ai-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/webscraping-ai-rate-limits.yml
+  - type: DataModel
+    url: data-model/webscraping-ai-data-model.yml
+- aid: webscraping-ai:webscraping-ai-html-api
+  name: WebScraping.AI HTML API
+  description: Get full HTML content of pages using proxies and Chromium JS rendering
+  humanURL: https://webscraping.ai/docs
+  baseURL: https://api.webscraping.ai
+  tags:
+  - HTML
+  properties:
+  - type: OpenAPI
+    url: openapi/webscraping-ai-html-api-openapi.yml
+  - type: Documentation
+    url: https://webscraping.ai/docs
+  - type: APIReference
+    url: https://webscraping.ai/docs#parameters
+  - type: GettingStarted
+    url: https://webscraping.ai/docs#quick-start
+  - type: Authentication
+    url: authentication/webscraping-ai-authentication.yml
+  - type: ErrorCatalog
+    url: errors/webscraping-ai-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/webscraping-ai-rate-limits.yml
+  - type: DataModel
+    url: data-model/webscraping-ai-data-model.yml
+- aid: webscraping-ai:webscraping-ai-selected-html-api
+  name: WebScraping.AI Selected HTML API
+  description: Get HTML content of selected page areas (like price, search results, page title, etc.)
+  humanURL: https://webscraping.ai/docs
+  baseURL: https://api.webscraping.ai
+  tags:
+  - Selected HTML
+  properties:
+  - type: OpenAPI
+    url: openapi/webscraping-ai-selected-html-api-openapi.yml
+  - type: Documentation
+    url: https://webscraping.ai/docs
+  - type: APIReference
+    url: https://webscraping.ai/docs#parameters
+  - type: GettingStarted
+    url: https://webscraping.ai/docs#quick-start
+  - type: Authentication
+    url: authentication/webscraping-ai-authentication.yml
+  - type: ErrorCatalog
+    url: errors/webscraping-ai-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/webscraping-ai-rate-limits.yml
+  - type: DataModel
+    url: data-model/webscraping-ai-data-model.yml
+- aid: webscraping-ai:webscraping-ai-text-api
+  name: WebScraping.AI Text API
+  description: Get visible text of pages using proxies and Chromium JS rendering
+  humanURL: https://webscraping.ai/docs
+  baseURL: https://api.webscraping.ai
+  tags:
+  - Text
+  properties:
+  - type: OpenAPI
+    url: openapi/webscraping-ai-text-api-openapi.yml
+  - type: Documentation
+    url: https://webscraping.ai/docs
+  - type: APIReference
+    url: https://webscraping.ai/docs#parameters
+  - type: GettingStarted
+    url: https://webscraping.ai/docs#quick-start
+  - type: Authentication
+    url: authentication/webscraping-ai-authentication.yml
+  - type: ErrorCatalog
+    url: errors/webscraping-ai-problem-types.yml
+  - type: RateLimits
+    url: rate-limits/webscraping-ai-rate-limits.yml
+  - type: DataModel
+    url: data-model/webscraping-ai-data-model.yml
 common:
 - type: OpenAPI
-  url: openapi/webscraping-ai-openapi.yml
+  url: openapi/_original/webscraping-ai-openapi.yml
 - type: Overlay
   url: overlays/webscraping-ai-openapi-overlay.yaml
 - type: AgenticAccess
