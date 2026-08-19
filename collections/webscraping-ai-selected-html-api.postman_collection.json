@@ -1,0 +1,1601 @@
+{
+  "item": [
+    {
+      "id": "87524b41-32b5-47b7-9210-864ed418be9d",
+      "name": "Selected HTML",
+      "description": {
+        "content": "Get HTML content of selected page areas (like price, search results, page title, etc.)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7e1fe116-53a3-46e7-bfd1-45858a1d14ec",
+          "name": "HTML of a selected page area by URL and CSS selector",
+          "request": {
+            "name": "HTML of a selected page area by URL and CSS selector",
+            "description": {
+              "content": "Returns HTML of a selected page area by URL and CSS selector. Useful if you don't want to do the HTML parsing on your side.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "selected"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selector",
+                  "value": "<string>",
+                  "description": "CSS selector (null by default, returns whole page HTML)"
+                },
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) URL of the target page."
+                },
+                {
+                  "disabled": false,
+                  "key": "headers[key_0]",
+                  "value": "<string>",
+                  "description": "HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={\"One\": \"value1\", \"Another\": \"value2\"})."
+                },
+                {
+                  "disabled": false,
+                  "key": "headers[key_1]",
+                  "value": "<string>",
+                  "description": "HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={\"One\": \"value1\", \"Another\": \"value2\"})."
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "10000",
+                  "description": "Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000)."
+                },
+                {
+                  "disabled": false,
+                  "key": "js",
+                  "value": "true",
+                  "description": "Execute on-page JavaScript using a headless browser (true by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "js_timeout",
+                  "value": "2000",
+                  "description": "Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page."
+                },
+                {
+                  "disabled": false,
+                  "key": "wait_for",
+                  "value": "<string>",
+                  "description": "CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body."
+                },
+                {
+                  "disabled": false,
+                  "key": "proxy",
+                  "value": "datacenter",
+                  "description": "Type of proxy. Use `residential` if your site restricts traffic from datacenters, or `stealth` for the most heavily protected sites with advanced anti-bot detection (`datacenter` by default). Residential and stealth proxy requests are more expensive than datacenter, see the pricing page for details."
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "us",
+                  "description": "Country of the proxy to use (US by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "custom_proxy",
+                  "value": "<string>",
+                  "description": "Your own proxy URL to use instead of our built-in proxy pool in \"http://user:password@host:port\" format (<a target=\"_blank\" href=\"https://webscraping.ai/proxies/smartproxy\">Smartproxy</a> for example)."
+                },
+                {
+                  "disabled": false,
+                  "key": "device",
+                  "value": "desktop",
+                  "description": "Type of device emulation."
+                },
+                {
+                  "disabled": false,
+                  "key": "error_on_404",
+                  "value": "false",
+                  "description": "Return error on 404 HTTP status on the target page (false by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "error_on_redirect",
+                  "value": "false",
+                  "description": "Return error on redirect on the target page (false by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "js_script",
+                  "value": "<string>",
+                  "description": "Custom JavaScript code to execute on the target page."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Format of the response (text by default). \"json\" will return a JSON object with the response, \"text\" will return a plain text/HTML response."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "14cbaa08-54cc-4289-a9da-d239fa4d9491",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "<a href=\"https://www.iana.org/domains/example\">More information...</a>",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "998f7f56-e696-424d-993d-d5a3d822b99d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c80447ef-d147-4c3b-9837-37acd4bd0f27",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8fa5f752-5115-4893-a693-d7a21fb38f1c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4d3d471e-4745-49d4-9714-a66f1ac93b6a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08207926-f307-426c-add5-e4e6e009c302",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a3b0ab9a-cbc5-4343-a90f-ae54ef63b476",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selector",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b58e3d41-d4a6-4a6e-a28c-93e4855341f1",
+          "name": "HTML of multiple page areas by URL and CSS selectors",
+          "request": {
+            "name": "HTML of multiple page areas by URL and CSS selectors",
+            "description": {
+              "content": "Returns HTML of multiple page areas by URL and CSS selectors. Useful if you don't want to do the HTML parsing on your side.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "selected-multiple"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "selectors",
+                  "value": "<string>",
+                  "description": "Multiple CSS selectors (null by default, returns whole page HTML)"
+                },
+                {
+                  "disabled": false,
+                  "key": "selectors",
+                  "value": "<string>",
+                  "description": "Multiple CSS selectors (null by default, returns whole page HTML)"
+                },
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) URL of the target page."
+                },
+                {
+                  "disabled": false,
+                  "key": "headers[key_0]",
+                  "value": "<string>",
+                  "description": "HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={\"One\": \"value1\", \"Another\": \"value2\"})."
+                },
+                {
+                  "disabled": false,
+                  "key": "headers[key_1]",
+                  "value": "<string>",
+                  "description": "HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={\"One\": \"value1\", \"Another\": \"value2\"})."
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "10000",
+                  "description": "Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000)."
+                },
+                {
+                  "disabled": false,
+                  "key": "js",
+                  "value": "true",
+                  "description": "Execute on-page JavaScript using a headless browser (true by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "js_timeout",
+                  "value": "2000",
+                  "description": "Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page."
+                },
+                {
+                  "disabled": false,
+                  "key": "wait_for",
+                  "value": "<string>",
+                  "description": "CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body."
+                },
+                {
+                  "disabled": false,
+                  "key": "proxy",
+                  "value": "datacenter",
+                  "description": "Type of proxy. Use `residential` if your site restricts traffic from datacenters, or `stealth` for the most heavily protected sites with advanced anti-bot detection (`datacenter` by default). Residential and stealth proxy requests are more expensive than datacenter, see the pricing page for details."
+                },
+                {
+                  "disabled": false,
+                  "key": "country",
+                  "value": "us",
+                  "description": "Country of the proxy to use (US by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "custom_proxy",
+                  "value": "<string>",
+                  "description": "Your own proxy URL to use instead of our built-in proxy pool in \"http://user:password@host:port\" format (<a target=\"_blank\" href=\"https://webscraping.ai/proxies/smartproxy\">Smartproxy</a> for example)."
+                },
+                {
+                  "disabled": false,
+                  "key": "device",
+                  "value": "desktop",
+                  "description": "Type of device emulation."
+                },
+                {
+                  "disabled": false,
+                  "key": "error_on_404",
+                  "value": "false",
+                  "description": "Return error on 404 HTTP status on the target page (false by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "error_on_redirect",
+                  "value": "false",
+                  "description": "Return error on redirect on the target page (false by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "js_script",
+                  "value": "<string>",
+                  "description": "Custom JavaScript code to execute on the target page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80e39457-7b6e-4a7f-a485-03c9aab14b70",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected-multiple"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selectors",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"[\\\"<a href='/test'>some link</a>\\\", \\\"Hello\\\"]\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5f379ff-40e1-4e9d-8a4a-b8ef74cef2db",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected-multiple"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selectors",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "06e04255-3450-4f2d-a669-268d9634942d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected-multiple"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selectors",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9e6ac7c6-a492-40a3-854b-7a38fcd29bef",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected-multiple"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selectors",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03f7f804-9574-4ec3-8009-60ae38d68ed3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected-multiple"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selectors",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6d296920-8ce8-4abd-b4e4-992b7e5d3d8d",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected-multiple"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selectors",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4f5a7bd9-4a0c-4786-b1f0-8594e1810380",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "selected-multiple"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "selectors",
+                      "value": "h1"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "headers[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timeout",
+                      "value": "10000"
+                    },
+                    {
+                      "key": "js",
+                      "value": "true"
+                    },
+                    {
+                      "key": "js_timeout",
+                      "value": "2000"
+                    },
+                    {
+                      "key": "wait_for",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "proxy",
+                      "value": "datacenter"
+                    },
+                    {
+                      "key": "country",
+                      "value": "us"
+                    },
+                    {
+                      "key": "custom_proxy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "device",
+                      "value": "desktop"
+                    },
+                    {
+                      "key": "error_on_404",
+                      "value": "false"
+                    },
+                    {
+                      "key": "error_on_redirect",
+                      "value": "false"
+                    },
+                    {
+                      "key": "js_script",
+                      "value": "document.querySelector('button').click();"
+                    },
+                    {
+                      "key": "api_key",
+                      "value": "<API Key>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.webscraping.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api_key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "query"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b38f1a30-ca7c-4c99-8c50-3955603acd60",
+    "name": "WebScraping.AI Selected HTML API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "WebScraping.AI scraping API provides LLM-powered tools with Chromium JavaScript rendering, rotating proxies, and built-in HTML parsing.\n\nContact Support:\n Name: WebScraping.AI Support\n Email: support@webscraping.ai",
+      "type": "text/plain"
+    }
+  }
+}

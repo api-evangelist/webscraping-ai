@@ -1,0 +1,55 @@
+{
+  "provider": "webscraping-ai",
+  "sources": [
+    "webscraping-ai-account-api-openapi.yml",
+    "webscraping-ai-ai-api-openapi.yml",
+    "webscraping-ai-html-api-openapi.yml",
+    "webscraping-ai-selected-html-api-openapi.yml",
+    "webscraping-ai-text-api-openapi.yml"
+  ],
+  "outputs": [
+    "webscraping-ai-account-api-openapi.yml",
+    "webscraping-ai-ai-api-openapi.yml",
+    "webscraping-ai-html-api-openapi.yml",
+    "webscraping-ai-selected-html-api-openapi.yml",
+    "webscraping-ai-text-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "webscraping-ai-account-api-openapi.yml: dangling $ref: #/components/responses/403",
+    "webscraping-ai-ai-api-openapi.yml: dangling $ref: #/components/responses/400",
+    "webscraping-ai-ai-api-openapi.yml: dangling $ref: #/components/responses/402",
+    "webscraping-ai-ai-api-openapi.yml: dangling $ref: #/components/responses/403",
+    "webscraping-ai-ai-api-openapi.yml: dangling $ref: #/components/responses/429",
+    "webscraping-ai-ai-api-openapi.yml: dangling $ref: #/components/responses/500",
+    "webscraping-ai-ai-api-openapi.yml: dangling $ref: #/components/responses/504",
+    "webscraping-ai-html-api-openapi.yml: dangling $ref: #/components/responses/400",
+    "webscraping-ai-html-api-openapi.yml: dangling $ref: #/components/responses/402",
+    "webscraping-ai-html-api-openapi.yml: dangling $ref: #/components/responses/403",
+    "webscraping-ai-html-api-openapi.yml: dangling $ref: #/components/responses/429",
+    "webscraping-ai-html-api-openapi.yml: dangling $ref: #/components/responses/500",
+    "webscraping-ai-html-api-openapi.yml: dangling $ref: #/components/responses/504",
+    "webscraping-ai-selected-html-api-openapi.yml: dangling $ref: #/components/responses/400",
+    "webscraping-ai-selected-html-api-openapi.yml: dangling $ref: #/components/responses/402",
+    "webscraping-ai-selected-html-api-openapi.yml: dangling $ref: #/components/responses/403",
+    "webscraping-ai-selected-html-api-openapi.yml: dangling $ref: #/components/responses/429",
+    "webscraping-ai-selected-html-api-openapi.yml: dangling $ref: #/components/responses/500",
+    "webscraping-ai-selected-html-api-openapi.yml: dangling $ref: #/components/responses/504",
+    "webscraping-ai-text-api-openapi.yml: dangling $ref: #/components/responses/400",
+    "webscraping-ai-text-api-openapi.yml: dangling $ref: #/components/responses/402",
+    "webscraping-ai-text-api-openapi.yml: dangling $ref: #/components/responses/403",
+    "webscraping-ai-text-api-openapi.yml: dangling $ref: #/components/responses/429",
+    "webscraping-ai-text-api-openapi.yml: dangling $ref: #/components/responses/500",
+    "webscraping-ai-text-api-openapi.yml: dangling $ref: #/components/responses/504"
+  ],
+  "warnings": [],
+  "notes": [
+    "webscraping-ai-account-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "webscraping-ai-ai-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "webscraping-ai-html-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "webscraping-ai-selected-html-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "webscraping-ai-text-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": []
+}

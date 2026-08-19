@@ -1,0 +1,73 @@
+openapi: 3.2.0
+info:
+  title: WebScraping.AI Account API
+  contact:
+    name: WebScraping.AI Support
+    url: https://webscraping.ai
+    email: support@webscraping.ai
+  version: 3.2.1
+  description: WebScraping.AI scraping API provides LLM-powered tools with Chromium JavaScript rendering, rotating proxies, and built-in HTML parsing.
+servers:
+- url: https://api.webscraping.ai
+security:
+- api_key: []
+tags:
+- name: Account
+  description: Information about your account API credits quota
+paths:
+  /account:
+    get:
+      summary: Information about your account calls quota
+      description: Returns information about your account, including the remaining API credits quota, the next billing cycle start time, and the remaining concurrent requests. The response is in JSON format.
+      operationId: account
+      tags:
+      - Account
+      responses:
+        403:
+          $ref: '#/components/responses/403'
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+              example:
+                remaining_api_calls: 200000
+                remaining_monthly_credits: 200000
+                remaining_payg_credits: 100000
+                remaining_total_credits: 300000
+                resets_at: 1617073667
+                remaining_concurrency: 100
+components:
+  schemas:
+    Account:
+      title: Account limits info
+      type: object
+      properties:
+        email:
+          type: string
+          description: Your account email
+        remaining_api_calls:
+          type: integer
+          deprecated: true
+          description: Deprecated alias of remaining_monthly_credits, kept for backward compatibility
+        remaining_monthly_credits:
+          type: integer
+          description: Remaining monthly API credits on the subscription plan (does not include pay-as-you-go credits)
+        remaining_payg_credits:
+          type: integer
+          description: Remaining pay-as-you-go credits, consumed after the monthly quota is exhausted (valid for 12 months after the last top-up)
+        remaining_total_credits:
+          type: integer
+          description: Total remaining API credits (monthly + pay-as-you-go)
+        resets_at:
+          type: integer
+          description: Next billing cycle start time (UNIX timestamp)
+        remaining_concurrency:
+          type: integer
+          description: Remaining concurrent requests
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: query

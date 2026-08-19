@@ -1,0 +1,271 @@
+openapi: 3.2.0
+info:
+  title: WebScraping.AI Selected HTML API
+  contact:
+    name: WebScraping.AI Support
+    url: https://webscraping.ai
+    email: support@webscraping.ai
+  version: 3.2.1
+  description: WebScraping.AI scraping API provides LLM-powered tools with Chromium JavaScript rendering, rotating proxies, and built-in HTML parsing.
+servers:
+- url: https://api.webscraping.ai
+security:
+- api_key: []
+tags:
+- name: Selected HTML
+  description: Get HTML content of selected page areas (like price, search results, page title, etc.)
+paths:
+  /selected:
+    get:
+      summary: HTML of a selected page area by URL and CSS selector
+      description: Returns HTML of a selected page area by URL and CSS selector. Useful if you don't want to do the HTML parsing on your side.
+      operationId: getSelected
+      tags:
+      - Selected HTML
+      parameters:
+      - in: query
+        name: selector
+        description: CSS selector (null by default, returns whole page HTML)
+        example: h1
+        schema:
+          type: string
+      - $ref: '#/components/parameters/url'
+      - $ref: '#/components/parameters/headers'
+      - $ref: '#/components/parameters/timeout'
+      - $ref: '#/components/parameters/js'
+      - $ref: '#/components/parameters/js_timeout'
+      - $ref: '#/components/parameters/wait_for'
+      - $ref: '#/components/parameters/proxy'
+      - $ref: '#/components/parameters/country'
+      - $ref: '#/components/parameters/custom_proxy'
+      - $ref: '#/components/parameters/device'
+      - $ref: '#/components/parameters/error_on_404'
+      - $ref: '#/components/parameters/error_on_redirect'
+      - $ref: '#/components/parameters/js_script'
+      - $ref: '#/components/parameters/format'
+      responses:
+        400:
+          $ref: '#/components/responses/400'
+        402:
+          $ref: '#/components/responses/402'
+        403:
+          $ref: '#/components/responses/403'
+        429:
+          $ref: '#/components/responses/429'
+        500:
+          $ref: '#/components/responses/500'
+        504:
+          $ref: '#/components/responses/504'
+        200:
+          description: Success
+          content:
+            text/html:
+              schema:
+                type: string
+              example: <a href="https://www.iana.org/domains/example">More information...</a>
+  /selected-multiple:
+    get:
+      summary: HTML of multiple page areas by URL and CSS selectors
+      description: Returns HTML of multiple page areas by URL and CSS selectors. Useful if you don't want to do the HTML parsing on your side.
+      operationId: getSelectedMultiple
+      tags:
+      - Selected HTML
+      parameters:
+      - in: query
+        name: selectors
+        description: Multiple CSS selectors (null by default, returns whole page HTML)
+        example:
+        - h1
+        schema:
+          type: array
+          items:
+            type: string
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/url'
+      - $ref: '#/components/parameters/headers'
+      - $ref: '#/components/parameters/timeout'
+      - $ref: '#/components/parameters/js'
+      - $ref: '#/components/parameters/js_timeout'
+      - $ref: '#/components/parameters/wait_for'
+      - $ref: '#/components/parameters/proxy'
+      - $ref: '#/components/parameters/country'
+      - $ref: '#/components/parameters/custom_proxy'
+      - $ref: '#/components/parameters/device'
+      - $ref: '#/components/parameters/error_on_404'
+      - $ref: '#/components/parameters/error_on_redirect'
+      - $ref: '#/components/parameters/js_script'
+      responses:
+        400:
+          $ref: '#/components/responses/400'
+        402:
+          $ref: '#/components/responses/402'
+        403:
+          $ref: '#/components/responses/403'
+        429:
+          $ref: '#/components/responses/429'
+        500:
+          $ref: '#/components/responses/500'
+        504:
+          $ref: '#/components/responses/504'
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SelectedAreas'
+              example: '["<a href=''/test''>some link</a>", "Hello"]'
+components:
+  parameters:
+    custom_proxy:
+      in: query
+      name: custom_proxy
+      description: Your own proxy URL to use instead of our built-in proxy pool in "http://user:password@host:port" format (<a target="_blank" href="https://webscraping.ai/proxies/smartproxy">Smartproxy</a> for example).
+      example: null
+      schema:
+        type: string
+    timeout:
+      in: query
+      name: timeout
+      description: Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000).
+      example: 10000
+      schema:
+        type: integer
+        default: 10000
+        minimum: 1
+        maximum: 30000
+    country:
+      in: query
+      name: country
+      description: Country of the proxy to use (US by default).
+      example: us
+      schema:
+        type: string
+        default: us
+        enum:
+        - us
+        - gb
+        - de
+        - it
+        - fr
+        - ca
+        - es
+        - ru
+        - jp
+        - kr
+        - in
+        - hk
+        - tr
+    js_script:
+      in: query
+      name: js_script
+      description: Custom JavaScript code to execute on the target page.
+      example: document.querySelector('button').click();
+      schema:
+        type: string
+    format:
+      in: query
+      name: format
+      description: Format of the response (text by default). "json" will return a JSON object with the response, "text" will return a plain text/HTML response.
+      example: json
+      schema:
+        type: string
+        default: json
+        enum:
+        - json
+        - text
+    error_on_redirect:
+      in: query
+      name: error_on_redirect
+      description: Return error on redirect on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
+    proxy:
+      in: query
+      name: proxy
+      description: Type of proxy. Use `residential` if your site restricts traffic from datacenters, or `stealth` for the most heavily protected sites with advanced anti-bot detection (`datacenter` by default). Residential and stealth proxy requests are more expensive than datacenter, see the pricing page for details.
+      example: datacenter
+      schema:
+        type: string
+        default: datacenter
+        enum:
+        - datacenter
+        - residential
+        - stealth
+    js:
+      in: query
+      name: js
+      description: Execute on-page JavaScript using a headless browser (true by default).
+      example: true
+      schema:
+        type: boolean
+        default: true
+    device:
+      in: query
+      name: device
+      description: Type of device emulation.
+      example: desktop
+      schema:
+        type: string
+        default: desktop
+        enum:
+        - desktop
+        - mobile
+        - tablet
+    error_on_404:
+      in: query
+      name: error_on_404
+      description: Return error on 404 HTTP status on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
+    url:
+      in: query
+      name: url
+      description: URL of the target page.
+      required: true
+      example: https://example.com
+      schema:
+        type: string
+    headers:
+      in: query
+      name: headers
+      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
+      example: '{"Cookie":"session=some_id"}'
+      schema:
+        type: object
+        additionalProperties:
+          type: string
+      style: deepObject
+      explode: true
+    wait_for:
+      in: query
+      name: wait_for
+      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
+      schema:
+        type: string
+    js_timeout:
+      in: query
+      name: js_timeout
+      description: Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page.
+      example: 2000
+      schema:
+        type: integer
+        default: 2000
+        minimum: 1
+        maximum: 20000
+  schemas:
+    SelectedAreas:
+      title: HTML for selected page areas
+      type: array
+      description: Array of elements matched by selectors
+      items:
+        type: string
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: query

@@ -1,0 +1,226 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WebScraping.AI Selected HTML API",
+    "version": "3.2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Selected HTML",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HTML of a selected page area by URL and CSS selector",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.webscraping.ai/selected",
+            "params": [
+              {
+                "name": "selector",
+                "value": "h1",
+                "type": "query",
+                "description": "CSS selector (null by default, returns whole page HTML)"
+              },
+              {
+                "name": "url",
+                "value": "https://example.com",
+                "type": "query",
+                "description": "URL of the target page."
+              },
+              {
+                "name": "headers",
+                "value": "{\"Cookie\":\"session=some_id\"}",
+                "type": "query",
+                "description": "HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={\"One\": \"value1\", \"Another\": \"value2\"})."
+              },
+              {
+                "name": "timeout",
+                "value": "10000",
+                "type": "query",
+                "description": "Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000)."
+              },
+              {
+                "name": "js",
+                "value": "true",
+                "type": "query",
+                "description": "Execute on-page JavaScript using a headless browser (true by default)."
+              },
+              {
+                "name": "js_timeout",
+                "value": "2000",
+                "type": "query",
+                "description": "Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page."
+              },
+              {
+                "name": "wait_for",
+                "value": "",
+                "type": "query",
+                "description": "CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body."
+              },
+              {
+                "name": "proxy",
+                "value": "datacenter",
+                "type": "query",
+                "description": "Type of proxy. Use `residential` if your site restricts traffic from datacenters, or `stealth` for the most heavily protected sites with advanced anti-bot detection (`datacenter` by default). Residential and stealth proxy requests are more expensive than datacenter, see the pricing page for details."
+              },
+              {
+                "name": "country",
+                "value": "us",
+                "type": "query",
+                "description": "Country of the proxy to use (US by default)."
+              },
+              {
+                "name": "custom_proxy",
+                "value": "null",
+                "type": "query",
+                "description": "Your own proxy URL to use instead of our built-in proxy pool in \"http://user:password@host:port\" format (<a target=\"_blank\" href=\"https://webscraping.ai/proxies/smartproxy\">Smartproxy</a> for example)."
+              },
+              {
+                "name": "device",
+                "value": "desktop",
+                "type": "query",
+                "description": "Type of device emulation."
+              },
+              {
+                "name": "error_on_404",
+                "value": "false",
+                "type": "query",
+                "description": "Return error on 404 HTTP status on the target page (false by default)."
+              },
+              {
+                "name": "error_on_redirect",
+                "value": "false",
+                "type": "query",
+                "description": "Return error on redirect on the target page (false by default)."
+              },
+              {
+                "name": "js_script",
+                "value": "document.querySelector('button').click();",
+                "type": "query",
+                "description": "Custom JavaScript code to execute on the target page."
+              },
+              {
+                "name": "format",
+                "value": "json",
+                "type": "query",
+                "description": "Format of the response (text by default). \"json\" will return a JSON object with the response, \"text\" will return a plain text/HTML response."
+              }
+            ]
+          },
+          "docs": "Returns HTML of a selected page area by URL and CSS selector. Useful if you don't want to do the HTML parsing on your side."
+        },
+        {
+          "info": {
+            "name": "HTML of multiple page areas by URL and CSS selectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.webscraping.ai/selected-multiple",
+            "params": [
+              {
+                "name": "selectors",
+                "value": "h1",
+                "type": "query",
+                "description": "Multiple CSS selectors (null by default, returns whole page HTML)"
+              },
+              {
+                "name": "url",
+                "value": "https://example.com",
+                "type": "query",
+                "description": "URL of the target page."
+              },
+              {
+                "name": "headers",
+                "value": "{\"Cookie\":\"session=some_id\"}",
+                "type": "query",
+                "description": "HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={\"One\": \"value1\", \"Another\": \"value2\"})."
+              },
+              {
+                "name": "timeout",
+                "value": "10000",
+                "type": "query",
+                "description": "Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000)."
+              },
+              {
+                "name": "js",
+                "value": "true",
+                "type": "query",
+                "description": "Execute on-page JavaScript using a headless browser (true by default)."
+              },
+              {
+                "name": "js_timeout",
+                "value": "2000",
+                "type": "query",
+                "description": "Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page."
+              },
+              {
+                "name": "wait_for",
+                "value": "",
+                "type": "query",
+                "description": "CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body."
+              },
+              {
+                "name": "proxy",
+                "value": "datacenter",
+                "type": "query",
+                "description": "Type of proxy. Use `residential` if your site restricts traffic from datacenters, or `stealth` for the most heavily protected sites with advanced anti-bot detection (`datacenter` by default). Residential and stealth proxy requests are more expensive than datacenter, see the pricing page for details."
+              },
+              {
+                "name": "country",
+                "value": "us",
+                "type": "query",
+                "description": "Country of the proxy to use (US by default)."
+              },
+              {
+                "name": "custom_proxy",
+                "value": "null",
+                "type": "query",
+                "description": "Your own proxy URL to use instead of our built-in proxy pool in \"http://user:password@host:port\" format (<a target=\"_blank\" href=\"https://webscraping.ai/proxies/smartproxy\">Smartproxy</a> for example)."
+              },
+              {
+                "name": "device",
+                "value": "desktop",
+                "type": "query",
+                "description": "Type of device emulation."
+              },
+              {
+                "name": "error_on_404",
+                "value": "false",
+                "type": "query",
+                "description": "Return error on 404 HTTP status on the target page (false by default)."
+              },
+              {
+                "name": "error_on_redirect",
+                "value": "false",
+                "type": "query",
+                "description": "Return error on redirect on the target page (false by default)."
+              },
+              {
+                "name": "js_script",
+                "value": "document.querySelector('button').click();",
+                "type": "query",
+                "description": "Custom JavaScript code to execute on the target page."
+              }
+            ]
+          },
+          "docs": "Returns HTML of multiple page areas by URL and CSS selectors. Useful if you don't want to do the HTML parsing on your side."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "WebScraping.AI Account API",
+    "version": "3.2.1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api_key",
+      "value": "{{api_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Information about your account calls quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.webscraping.ai/account"
+          },
+          "docs": "Returns information about your account, including the remaining API credits quota, the next billing cycle start time, and the remaining concurrent requests. The response is in JSON format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
