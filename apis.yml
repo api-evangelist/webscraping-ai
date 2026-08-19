@@ -25,7 +25,7 @@ description: WebScraping.AI is a web scraping API that returns the rendered HTML
   proxy front-end for existing scraping tools, an official CLI that ships an installable agent skill,
   and first-party SDKs for Python, JavaScript, PHP, Ruby, Go, Java and .NET.
 url: https://webscraping.ai/
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-05-28'
 modified: '2026-08-09'
 x-source: public-apis/public-apis
