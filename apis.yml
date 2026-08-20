@@ -38,6 +38,20 @@ tags:
 - Proxies
 - Artificial Intelligence
 - Browser Automation
+- MCP
+- Development
+- Public APIs
+- HTML
+- LLM Tools
+- Structured Data
+- Headless Browser
+- CAPTCHA
+tags_raw:
+- Web Scraping
+- Data Extraction
+- Proxies
+- Artificial Intelligence
+- Browser Automation
 - Model Context Protocol
 - Development
 - Public APIs
@@ -57,6 +71,10 @@ apis:
   humanURL: https://webscraping.ai/docs#ai-tools
   baseURL: https://mcp.webscraping.ai/mcp
   tags:
+  - MCP
+  - Artificial Intelligence
+  - Web Scraping
+  tags_raw:
   - Model Context Protocol
   - Artificial Intelligence
   - Web Scraping
@@ -97,6 +115,8 @@ apis:
   humanURL: https://webscraping.ai/docs
   baseURL: https://api.webscraping.ai
   tags:
+  - Artificial Intelligence
+  tags_raw:
   - AI
   properties:
   - type: OpenAPI
