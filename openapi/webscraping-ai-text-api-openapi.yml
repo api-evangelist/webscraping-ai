@@ -72,6 +72,45 @@ paths:
               example: '{"title":"Some title","description":"Some description","content":"Some content"}'
 components:
   parameters:
+    error_on_redirect:
+      in: query
+      name: error_on_redirect
+      description: Return error on redirect on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
+    headers:
+      in: query
+      name: headers
+      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
+      example: '{"Cookie":"session=some_id"}'
+      schema:
+        type: object
+        additionalProperties:
+          type: string
+      style: deepObject
+      explode: true
+    device:
+      in: query
+      name: device
+      description: Type of device emulation.
+      example: desktop
+      schema:
+        type: string
+        default: desktop
+        enum:
+        - desktop
+        - mobile
+        - tablet
+    js:
+      in: query
+      name: js
+      description: Execute on-page JavaScript using a headless browser (true by default).
+      example: true
+      schema:
+        type: boolean
+        default: true
     custom_proxy:
       in: query
       name: custom_proxy
@@ -89,14 +128,6 @@ components:
         default: 10000
         minimum: 1
         maximum: 30000
-    return_links:
-      in: query
-      name: return_links
-      description: '[Works only with text_format=json] Return links from the page body text (false by default). Useful for building web crawlers.'
-      example: false
-      schema:
-        type: boolean
-        default: false
     text_format:
       in: query
       name: text_format
@@ -109,6 +140,28 @@ components:
         - plain
         - xml
         - json
+    url:
+      in: query
+      name: url
+      description: URL of the target page.
+      required: true
+      example: https://example.com
+      schema:
+        type: string
+    wait_for:
+      in: query
+      name: wait_for
+      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
+      schema:
+        type: string
+    error_on_404:
+      in: query
+      name: error_on_404
+      description: Return error on 404 HTTP status on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
     country:
       in: query
       name: country
@@ -131,21 +184,6 @@ components:
         - in
         - hk
         - tr
-    js_script:
-      in: query
-      name: js_script
-      description: Custom JavaScript code to execute on the target page.
-      example: document.querySelector('button').click();
-      schema:
-        type: string
-    error_on_redirect:
-      in: query
-      name: error_on_redirect
-      description: Return error on redirect on the target page (false by default).
-      example: false
-      schema:
-        type: boolean
-        default: false
     proxy:
       in: query
       name: proxy
@@ -158,59 +196,6 @@ components:
         - datacenter
         - residential
         - stealth
-    js:
-      in: query
-      name: js
-      description: Execute on-page JavaScript using a headless browser (true by default).
-      example: true
-      schema:
-        type: boolean
-        default: true
-    device:
-      in: query
-      name: device
-      description: Type of device emulation.
-      example: desktop
-      schema:
-        type: string
-        default: desktop
-        enum:
-        - desktop
-        - mobile
-        - tablet
-    error_on_404:
-      in: query
-      name: error_on_404
-      description: Return error on 404 HTTP status on the target page (false by default).
-      example: false
-      schema:
-        type: boolean
-        default: false
-    url:
-      in: query
-      name: url
-      description: URL of the target page.
-      required: true
-      example: https://example.com
-      schema:
-        type: string
-    headers:
-      in: query
-      name: headers
-      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
-      example: '{"Cookie":"session=some_id"}'
-      schema:
-        type: object
-        additionalProperties:
-          type: string
-      style: deepObject
-      explode: true
-    wait_for:
-      in: query
-      name: wait_for
-      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
-      schema:
-        type: string
     js_timeout:
       in: query
       name: js_timeout
@@ -221,6 +206,21 @@ components:
         default: 2000
         minimum: 1
         maximum: 20000
+    return_links:
+      in: query
+      name: return_links
+      description: '[Works only with text_format=json] Return links from the page body text (false by default). Useful for building web crawlers.'
+      example: false
+      schema:
+        type: boolean
+        default: false
+    js_script:
+      in: query
+      name: js_script
+      description: Custom JavaScript code to execute on the target page.
+      example: document.querySelector('button').click();
+      schema:
+        type: string
   securitySchemes:
     api_key:
       type: apiKey

@@ -120,13 +120,52 @@ paths:
                 description: This is a sample product description
 components:
   parameters:
-    custom_proxy:
+    error_on_redirect:
       in: query
-      name: custom_proxy
-      description: Your own proxy URL to use instead of our built-in proxy pool in "http://user:password@host:port" format (<a target="_blank" href="https://webscraping.ai/proxies/smartproxy">Smartproxy</a> for example).
-      example: null
+      name: error_on_redirect
+      description: Return error on redirect on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
+    question:
+      in: query
+      name: question
+      description: Question or instructions to ask the LLM model about the target page.
+      example: What is the summary of this page content?
       schema:
         type: string
+    headers:
+      in: query
+      name: headers
+      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
+      example: '{"Cookie":"session=some_id"}'
+      schema:
+        type: object
+        additionalProperties:
+          type: string
+      style: deepObject
+      explode: true
+    device:
+      in: query
+      name: device
+      description: Type of device emulation.
+      example: desktop
+      schema:
+        type: string
+        default: desktop
+        enum:
+        - desktop
+        - mobile
+        - tablet
+    js:
+      in: query
+      name: js
+      description: Execute on-page JavaScript using a headless browser (true by default).
+      example: true
+      schema:
+        type: boolean
+        default: true
     timeout:
       in: query
       name: timeout
@@ -137,13 +176,38 @@ components:
         default: 10000
         minimum: 1
         maximum: 30000
-    question:
+    js_timeout:
       in: query
-      name: question
-      description: Question or instructions to ask the LLM model about the target page.
-      example: What is the summary of this page content?
+      name: js_timeout
+      description: Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page.
+      example: 2000
+      schema:
+        type: integer
+        default: 2000
+        minimum: 1
+        maximum: 20000
+    url:
+      in: query
+      name: url
+      description: URL of the target page.
+      required: true
+      example: https://example.com
       schema:
         type: string
+    wait_for:
+      in: query
+      name: wait_for
+      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
+      schema:
+        type: string
+    error_on_404:
+      in: query
+      name: error_on_404
+      description: Return error on 404 HTTP status on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
     country:
       in: query
       name: country
@@ -166,32 +230,6 @@ components:
         - in
         - hk
         - tr
-    js_script:
-      in: query
-      name: js_script
-      description: Custom JavaScript code to execute on the target page.
-      example: document.querySelector('button').click();
-      schema:
-        type: string
-    format:
-      in: query
-      name: format
-      description: Format of the response (text by default). "json" will return a JSON object with the response, "text" will return a plain text/HTML response.
-      example: json
-      schema:
-        type: string
-        default: json
-        enum:
-        - json
-        - text
-    error_on_redirect:
-      in: query
-      name: error_on_redirect
-      description: Return error on redirect on the target page (false by default).
-      example: false
-      schema:
-        type: boolean
-        default: false
     proxy:
       in: query
       name: proxy
@@ -204,69 +242,31 @@ components:
         - datacenter
         - residential
         - stealth
-    js:
+    format:
       in: query
-      name: js
-      description: Execute on-page JavaScript using a headless browser (true by default).
-      example: true
-      schema:
-        type: boolean
-        default: true
-    device:
-      in: query
-      name: device
-      description: Type of device emulation.
-      example: desktop
+      name: format
+      description: Format of the response (text by default). "json" will return a JSON object with the response, "text" will return a plain text/HTML response.
+      example: json
       schema:
         type: string
-        default: desktop
+        default: json
         enum:
-        - desktop
-        - mobile
-        - tablet
-    error_on_404:
+        - json
+        - text
+    custom_proxy:
       in: query
-      name: error_on_404
-      description: Return error on 404 HTTP status on the target page (false by default).
-      example: false
-      schema:
-        type: boolean
-        default: false
-    url:
-      in: query
-      name: url
-      description: URL of the target page.
-      required: true
-      example: https://example.com
+      name: custom_proxy
+      description: Your own proxy URL to use instead of our built-in proxy pool in "http://user:password@host:port" format (<a target="_blank" href="https://webscraping.ai/proxies/smartproxy">Smartproxy</a> for example).
+      example: null
       schema:
         type: string
-    headers:
+    js_script:
       in: query
-      name: headers
-      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
-      example: '{"Cookie":"session=some_id"}'
-      schema:
-        type: object
-        additionalProperties:
-          type: string
-      style: deepObject
-      explode: true
-    wait_for:
-      in: query
-      name: wait_for
-      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
+      name: js_script
+      description: Custom JavaScript code to execute on the target page.
+      example: document.querySelector('button').click();
       schema:
         type: string
-    js_timeout:
-      in: query
-      name: js_timeout
-      description: Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page.
-      example: 2000
-      schema:
-        type: integer
-        default: 2000
-        minimum: 1
-        maximum: 20000
   securitySchemes:
     api_key:
       type: apiKey

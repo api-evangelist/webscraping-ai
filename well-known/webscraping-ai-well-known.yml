@@ -1,19 +1,19 @@
-generated: '2026-08-09'
+generated: '2026-09-19'
 method: searched
 source: live probes of the webscraping.ai, api.webscraping.ai and mcp.webscraping.ai hosts
 hosts:
 - host: https://webscraping.ai
   documents:
-  - path: /.well-known/oauth-authorization-server   # RFC 8414
+  - path: /.well-known/oauth-authorization-server
     status: 200
     file: webscraping-ai-oauth-authorization-server.json
-  - path: /.well-known/oauth-protected-resource     # RFC 9728
+  - path: /.well-known/oauth-protected-resource
     status: 200
     file: webscraping-ai-oauth-protected-resource.json
   - path: /.well-known/oauth-protected-resource/mcp
     status: 200
     note: same document as /.well-known/oauth-protected-resource
-  - path: /.well-known/security.txt                 # RFC 9116
+  - path: /.well-known/security.txt
     status: 404
   - path: /.well-known/openid-configuration
     status: 404
@@ -51,9 +51,27 @@ hosts:
   - path: /.well-known/agent-card.json
     status: 301
     note: redirects to webscraping.ai, which 404s — no A2A agent card is published
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: webscraping-ai-mcp-oauth-protected-resource.json
+    bytes: 233
+  path_echo_control: passed
 findings:
-- The provider publishes a complete OAuth 2.1 discovery pair for its hosted MCP server —
-  authorization-server metadata with dynamic client registration (RFC 7591) and PKCE S256,
-  plus protected-resource metadata naming https://mcp.webscraping.ai/mcp.
+- The provider publishes a complete OAuth 2.1 discovery pair for its hosted MCP server — authorization-server
+  metadata with dynamic client registration (RFC 7591) and PKCE S256, plus protected-resource metadata
+  naming https://mcp.webscraping.ai/mcp.
 - No security.txt is published on any host.
 - No api-catalog, no ai-plugin.json, no A2A agent card on any host.
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.webscraping.ai
+    path: /.well-known/oauth-protected-resource
+    file: webscraping-ai-mcp-oauth-protected-resource.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
+note: 'MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s
+  primary hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed
+  and were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
