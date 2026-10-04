@@ -117,35 +117,6 @@ paths:
               example: '["<a href=''/test''>some link</a>", "Hello"]'
 components:
   parameters:
-    timeout:
-      in: query
-      name: timeout
-      description: Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000).
-      example: 10000
-      schema:
-        type: integer
-        default: 10000
-        minimum: 1
-        maximum: 30000
-    format:
-      in: query
-      name: format
-      description: Format of the response (text by default). "json" will return a JSON object with the response, "text" will return a plain text/HTML response.
-      example: json
-      schema:
-        type: string
-        default: json
-        enum:
-        - json
-        - text
-    error_on_404:
-      in: query
-      name: error_on_404
-      description: Return error on 404 HTTP status on the target page (false by default).
-      example: false
-      schema:
-        type: boolean
-        default: false
     js:
       in: query
       name: js
@@ -154,6 +125,14 @@ components:
       schema:
         type: boolean
         default: true
+    error_on_redirect:
+      in: query
+      name: error_on_redirect
+      description: Return error on redirect on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
     device:
       in: query
       name: device
@@ -174,18 +153,75 @@ components:
       example: https://example.com
       schema:
         type: string
-    js_script:
+    wait_for:
       in: query
-      name: js_script
-      description: Custom JavaScript code to execute on the target page.
-      example: document.querySelector('button').click();
+      name: wait_for
+      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
       schema:
         type: string
+    js_timeout:
+      in: query
+      name: js_timeout
+      description: Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page.
+      example: 2000
+      schema:
+        type: integer
+        default: 2000
+        minimum: 1
+        maximum: 20000
+    timeout:
+      in: query
+      name: timeout
+      description: Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000).
+      example: 10000
+      schema:
+        type: integer
+        default: 10000
+        minimum: 1
+        maximum: 30000
     custom_proxy:
       in: query
       name: custom_proxy
       description: Your own proxy URL to use instead of our built-in proxy pool in "http://user:password@host:port" format (<a target="_blank" href="https://webscraping.ai/proxies/smartproxy">Smartproxy</a> for example).
       example: null
+      schema:
+        type: string
+    error_on_404:
+      in: query
+      name: error_on_404
+      description: Return error on 404 HTTP status on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
+    headers:
+      in: query
+      name: headers
+      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
+      example: '{"Cookie":"session=some_id"}'
+      schema:
+        type: object
+        additionalProperties:
+          type: string
+      style: deepObject
+      explode: true
+    proxy:
+      in: query
+      name: proxy
+      description: Type of proxy. Use `residential` if your site restricts traffic from datacenters, or `stealth` for the most heavily protected sites with advanced anti-bot detection (`datacenter` by default). Residential and stealth proxy requests are more expensive than datacenter, see the pricing page for details.
+      example: datacenter
+      schema:
+        type: string
+        default: datacenter
+        enum:
+        - datacenter
+        - residential
+        - stealth
+    js_script:
+      in: query
+      name: js_script
+      description: Custom JavaScript code to execute on the target page.
+      example: document.querySelector('button').click();
       schema:
         type: string
     country:
@@ -210,53 +246,17 @@ components:
         - in
         - hk
         - tr
-    error_on_redirect:
+    format:
       in: query
-      name: error_on_redirect
-      description: Return error on redirect on the target page (false by default).
-      example: false
-      schema:
-        type: boolean
-        default: false
-    proxy:
-      in: query
-      name: proxy
-      description: Type of proxy. Use `residential` if your site restricts traffic from datacenters, or `stealth` for the most heavily protected sites with advanced anti-bot detection (`datacenter` by default). Residential and stealth proxy requests are more expensive than datacenter, see the pricing page for details.
-      example: datacenter
+      name: format
+      description: Format of the response (text by default). "json" will return a JSON object with the response, "text" will return a plain text/HTML response.
+      example: json
       schema:
         type: string
-        default: datacenter
+        default: json
         enum:
-        - datacenter
-        - residential
-        - stealth
-    wait_for:
-      in: query
-      name: wait_for
-      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
-      schema:
-        type: string
-    js_timeout:
-      in: query
-      name: js_timeout
-      description: Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page.
-      example: 2000
-      schema:
-        type: integer
-        default: 2000
-        minimum: 1
-        maximum: 20000
-    headers:
-      in: query
-      name: headers
-      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
-      example: '{"Cookie":"session=some_id"}'
-      schema:
-        type: object
-        additionalProperties:
-          type: string
-      style: deepObject
-      explode: true
+        - json
+        - text
   schemas:
     SelectedAreas:
       title: HTML for selected page areas
