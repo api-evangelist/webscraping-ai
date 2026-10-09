@@ -122,3 +122,18 @@ deployment:
   probe: gated
   checked: '2026-08-12'
   source: catalog MCP census
+rfc9728:
+  endpoint: https://mcp.webscraping.ai/mcp
+  metadata_url: https://mcp.webscraping.ai/.well-known/oauth-protected-resource/mcp
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.webscraping.ai/mcp
+    authorization_servers:
+    - https://webscraping.ai
+    bearer_methods_supported:
+    - header
+    resource_name: WebScraping.AI MCP Server
+    resource_documentation: https://webscraping.ai/docs
