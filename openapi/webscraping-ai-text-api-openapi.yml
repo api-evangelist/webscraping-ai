@@ -80,6 +80,16 @@ components:
       schema:
         type: boolean
         default: true
+    timeout:
+      in: query
+      name: timeout
+      description: Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000).
+      example: 10000
+      schema:
+        type: integer
+        default: 10000
+        minimum: 1
+        maximum: 30000
     error_on_redirect:
       in: query
       name: error_on_redirect
@@ -88,6 +98,54 @@ components:
       schema:
         type: boolean
         default: false
+    url:
+      in: query
+      name: url
+      description: URL of the target page.
+      required: true
+      example: https://example.com
+      schema:
+        type: string
+    custom_proxy:
+      in: query
+      name: custom_proxy
+      description: Your own proxy URL to use instead of our built-in proxy pool in "http://user:password@host:port" format (<a target="_blank" href="https://webscraping.ai/proxies/smartproxy">Smartproxy</a> for example).
+      example: null
+      schema:
+        type: string
+    text_format:
+      in: query
+      name: text_format
+      description: Format of the text response (plain by default). "plain" will return the page body content as Markdown. "json" and "xml" will return a json/xml with "title", "description" and "content" (Markdown) keys.
+      example: plain
+      schema:
+        type: string
+        default: plain
+        enum:
+        - plain
+        - xml
+        - json
+    js_timeout:
+      in: query
+      name: js_timeout
+      description: Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page.
+      example: 2000
+      schema:
+        type: integer
+        default: 2000
+        minimum: 1
+        maximum: 20000
+    headers:
+      in: query
+      name: headers
+      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
+      example: '{"Cookie":"session=some_id"}'
+      schema:
+        type: object
+        additionalProperties:
+          type: string
+      style: deepObject
+      explode: true
     device:
       in: query
       name: device
@@ -108,66 +166,6 @@ components:
       schema:
         type: boolean
         default: false
-    wait_for:
-      in: query
-      name: wait_for
-      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
-      schema:
-        type: string
-    js_timeout:
-      in: query
-      name: js_timeout
-      description: Maximum JavaScript rendering time in ms. Increase it in case if you see a loading indicator instead of data on the target page.
-      example: 2000
-      schema:
-        type: integer
-        default: 2000
-        minimum: 1
-        maximum: 20000
-    timeout:
-      in: query
-      name: timeout
-      description: Maximum web page retrieval time in ms. Increase it in case of timeout errors (10000 by default, maximum is 30000).
-      example: 10000
-      schema:
-        type: integer
-        default: 10000
-        minimum: 1
-        maximum: 30000
-    custom_proxy:
-      in: query
-      name: custom_proxy
-      description: Your own proxy URL to use instead of our built-in proxy pool in "http://user:password@host:port" format (<a target="_blank" href="https://webscraping.ai/proxies/smartproxy">Smartproxy</a> for example).
-      example: null
-      schema:
-        type: string
-    error_on_404:
-      in: query
-      name: error_on_404
-      description: Return error on 404 HTTP status on the target page (false by default).
-      example: false
-      schema:
-        type: boolean
-        default: false
-    headers:
-      in: query
-      name: headers
-      description: 'HTTP headers to pass to the target page. Can be specified either via a nested query parameter (...&headers[One]=value1&headers=[Another]=value2) or as a JSON encoded object (...&headers={"One": "value1", "Another": "value2"}).'
-      example: '{"Cookie":"session=some_id"}'
-      schema:
-        type: object
-        additionalProperties:
-          type: string
-      style: deepObject
-      explode: true
-    url:
-      in: query
-      name: url
-      description: URL of the target page.
-      required: true
-      example: https://example.com
-      schema:
-        type: string
     proxy:
       in: query
       name: proxy
@@ -209,18 +207,20 @@ components:
         - in
         - hk
         - tr
-    text_format:
+    error_on_404:
       in: query
-      name: text_format
-      description: Format of the text response (plain by default). "plain" will return the page body content as Markdown. "json" and "xml" will return a json/xml with "title", "description" and "content" (Markdown) keys.
-      example: plain
+      name: error_on_404
+      description: Return error on 404 HTTP status on the target page (false by default).
+      example: false
+      schema:
+        type: boolean
+        default: false
+    wait_for:
+      in: query
+      name: wait_for
+      description: CSS selector to wait for before returning the page content. Useful for pages with dynamic content loading. Overrides js_timeout. If the element doesn't appear within the request timeout, the request fails with a 500 error naming the selector and including the target page's HTTP status code and a preview of the page body.
       schema:
         type: string
-        default: plain
-        enum:
-        - plain
-        - xml
-        - json
   securitySchemes:
     api_key:
       type: apiKey
